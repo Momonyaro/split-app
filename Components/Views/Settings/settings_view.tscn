@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d360dt3x43417"]
+[gd_scene load_steps=12 format=3 uid="uid://d360dt3x43417"]
 
 [ext_resource type="Script" uid="uid://f7aukbvkyf5i" path="res://Components/Views/Settings/settings_view.gd" id="1_spe6d"]
 [ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_w63qv"]
@@ -52,6 +52,18 @@ func _on_toggle(active: bool):
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w63qv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r5dsb"]
+
+[sub_resource type="GDScript" id="GDScript_2hx14"]
+resource_name = "VersionPrinter"
+script/source = "extends Label
+
+func _ready():
+	var version = PersistentData.try_get_persistent(\"version.committed\");
+	if version == null:
+		text = str('Version: nullref');
+	
+	text = str('Version: in-dev>>', version.substr(0, 8))
+"
 
 [node name="SettingsView" type="Panel"]
 anchors_preset = 15
@@ -135,6 +147,7 @@ theme_override_fonts/font = ExtResource("4_xpa5q")
 theme_override_font_sizes/font_size = 16
 text = "Created by: Sebastian Alkstrand"
 horizontal_alignment = 1
+uppercase = true
 
 [node name="Label2" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -142,3 +155,5 @@ theme_override_fonts/font = ExtResource("4_xpa5q")
 theme_override_font_sizes/font_size = 16
 text = "Version: id//51324"
 horizontal_alignment = 1
+uppercase = true
+script = SubResource("GDScript_2hx14")

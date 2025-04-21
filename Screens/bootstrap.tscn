@@ -40,12 +40,22 @@ extends Node
 
 const DATASTORE_PATH = \"user://datastore.sqlite\";
 
-@export_tool_button(\"Clear Local Storage\", \"Delete\") var _action = _on_clear_storage;
+@export_tool_button(\"Clear Local Storage\", \"Delete\") var _del_action = _on_clear_storage;
+@export_tool_button(\"Fetch Version\", \"Control\") var _ver_action = _on_get_version;
+
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		_on_get_version();
 
 func _on_clear_storage():
 	if FileAccess.file_exists(DATASTORE_PATH):
 		print(\"deleting -> \", DATASTORE_PATH);
 		DirAccess.remove_absolute(DATASTORE_PATH);
+
+func _on_get_version():
+	var file = FileAccess.open(\".git/refs/heads/main\", FileAccess.READ);
+	get_parent().version = file.get_as_text();
+	pass;
 "
 
 [node name="Bootstrap" type="Control"]
@@ -56,6 +66,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hc42q")
+version = "b325059d13bc8b4a74854a9facb7cfa064001568
+"
 target_scene = ExtResource("2_8qnnm")
 
 [node name="Modules" type="Node" parent="."]

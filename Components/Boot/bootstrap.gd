@@ -1,5 +1,6 @@
 extends Control
 
+@export var version: String;
 @export var target_scene: PackedScene;
 @export var wipe_existing_data: bool;
 var modules = []
@@ -10,9 +11,12 @@ func _ready() -> void:
 		await module.setup(self);
 		modules.push_back(module);
 
+	PersistentData.write_persistent("version.committed", version);
+
 	log_message("");
 	log_message("Done!");
 	await get_tree().create_timer(1).timeout;
+
 	get_tree().change_scene_to_packed(target_scene);
 
 func log_message(message: String) -> void:
