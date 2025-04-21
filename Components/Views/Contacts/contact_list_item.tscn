@@ -46,7 +46,7 @@ func populate(contact: Dictionary):
 	pass;
 
 func string_to_hsl_color(input: String, saturation: float, lightness: float) -> Color:
-	var byte_buffer = input.to_ascii_buffer();
+	var byte_buffer = input.to_utf8_buffer();
 	while (byte_buffer.size() % 4) != 0:
 		byte_buffer.append(0);
 	
