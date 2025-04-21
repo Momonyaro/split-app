@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://cf1i1jcj5v5f7"]
+
+[ext_resource type="Script" uid="uid://da4jmsl01ejfe" path="res://Components/Footer/footer_nav.gd" id="1_4yfbw"]
+[ext_resource type="PackedScene" uid="uid://dvittb6csdggl" path="res://Components/Footer/footer_item.tscn" id="1_mn1s6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mapnv"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="FooterContainer" type="PanelContainer"]
+offset_right = 539.0
+offset_bottom = 108.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mapnv")
+script = ExtResource("1_4yfbw")
+
+[node name="Footer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 84)
+layout_mode = 2
+
+[node name="FooterItem" parent="Footer" instance=ExtResource("1_mn1s6")]
+layout_mode = 2

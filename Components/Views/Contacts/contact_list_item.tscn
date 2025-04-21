@@ -1,0 +1,150 @@
+[gd_scene load_steps=11 format=3 uid="uid://c55cciwn63htn"]
+
+[ext_resource type="Texture2D" uid="uid://bwnh85uo7uhcj" path="res://icon.svg" id="1_3t4vj"]
+[ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="2_v0265"]
+[ext_resource type="Texture2D" uid="uid://bo7q40wtibffu" path="res://Media/Icons/pencil-svgrepo-com.svg" id="3_707dx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8fpwb"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="GDScript" id="GDScript_3t4vj"]
+resource_name = "ContactListItem"
+script/source = "extends PanelContainer
+
+var name_label: Label;
+var edit_btn: Button;
+var avatar_panel: Panel;
+
+func populate(contact: Dictionary):
+	name_label = $MarginContainer/HBoxContainer/Label;
+	edit_btn = $MarginContainer/HBoxContainer/Button;
+	avatar_panel = $MarginContainer/HBoxContainer/Panel;
+	
+	name_label.text = str(contact.name_given, ' ', contact.name_family);
+	
+	avatar_panel.get_child(-1).visible = false;
+	if contact.img_avatar == null:
+		# Construct fake avatar
+		avatar_panel.get_child(-1).visible = true;
+		avatar_panel.get_child(-1).color = string_to_hsl_color(name_label.text, 40, 40);
+		avatar_panel.get_child(-1).get_child(0).text = str(contact.name_given[0], contact.name_family[0]);
+		pass;
+	else:
+		# Load image into texture
+		pass;
+	
+	pass;
+
+func string_to_hsl_color(input: String, saturation: float, lightness: float) -> Color:
+	var byte_buffer = input.to_ascii_buffer();
+	while (byte_buffer.size() % 4) != 0:
+		byte_buffer.append(0);
+	
+	var to_int = Array(byte_buffer.to_int32_array());
+	var hash = to_int.reduce(func(accum, number): return accum + number, 0);
+	
+	var h = (hash % 360) / 360.0;
+	var resulting = Color.from_hsv(h, saturation / 100, lightness / 100);
+	return resulting;
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5s7e5"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8fpwb"]
+texture = ExtResource("1_3t4vj")
+
+[sub_resource type="LabelSettings" id="LabelSettings_3t4vj"]
+font = ExtResource("2_v0265")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_tul34"]
+font = ExtResource("2_v0265")
+font_size = 20
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5s7e5"]
+
+[node name="ContactListItem" type="PanelContainer"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_8fpwb")
+script = SubResource("GDScript_3t4vj")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer"]
+clip_children = 1
+z_index = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5s7e5")
+
+[node name="Avatar" type="Panel" parent="MarginContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_8fpwb")
+
+[node name="ColoredBack" type="ColorRect" parent="MarginContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.492699, 0.776612, 0.401913, 1)
+
+[node name="Initials" type="Label" parent="MarginContainer/HBoxContainer/Panel/ColoredBack"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "JD"
+label_settings = SubResource("LabelSettings_3t4vj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(83.355, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "John Doe"
+label_settings = SubResource("LabelSettings_tul34")
+text_overrun_behavior = 3
+
+[node name="Button" type="Button" parent="MarginContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/icon_max_width = 24
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5s7e5")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5s7e5")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_5s7e5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_5s7e5")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5s7e5")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5s7e5")
+icon = ExtResource("3_707dx")

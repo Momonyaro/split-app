@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://dvittb6csdggl"]
+
+[ext_resource type="Script" uid="uid://o18oa2hvqph5" path="res://Components/Footer/footer_item.gd" id="1_2s3li"]
+[ext_resource type="Texture2D" uid="uid://dn3imfkyu4r08" path="res://Media/Icons/home-svgrepo-com.svg" id="1_861y6"]
+[ext_resource type="LabelSettings" uid="uid://btll7ud72knx8" path="res://Components/Footer/footer_label.tres" id="2_861y6"]
+[ext_resource type="LabelSettings" uid="uid://daaw086682466" path="res://Components/Footer/footer_label_active.tres" id="3_iqvpu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mapnv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iqvpu"]
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="Gradient" id="Gradient_iqvpu"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.545932, 1)
+colors = PackedColorArray(0.203681, 0.203681, 0.203681, 1, 0.0870161, 0.0870161, 0.0870161, 1, 0.124449, 0.124449, 0.124449, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_a06gt"]
+gradient = SubResource("Gradient_iqvpu")
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qtnwr"]
+texture = SubResource("GradientTexture2D_a06gt")
+
+[node name="FooterItem" type="PanelContainer"]
+offset_right = 171.0
+offset_bottom = 107.0
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_mapnv")
+script = ExtResource("1_2s3li")
+label_settings = ExtResource("2_861y6")
+active_label_settings = ExtResource("3_iqvpu")
+
+[node name="Mask" type="Panel" parent="."]
+clip_children = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_iqvpu")
+
+[node name="Background" type="Panel" parent="Mask"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_qtnwr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_861y6")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "HOME"
+label_settings = ExtResource("2_861y6")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

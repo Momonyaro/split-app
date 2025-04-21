@@ -1,0 +1,22 @@
+{
+	"items": [
+		{
+			"key": "nav-home",
+			"title": "Home",
+			"icon_ref": "res://Media/Icons/home-svgrepo-com.svg",
+			"active_icon_ref": "res://Media/Icons/home-svgrepo-com.svg"
+		},
+		{
+			"key": "nav-contacts",
+			"title": "Contacts",
+			"icon_ref": "res://Media/Icons/person-svgrepo-com.svg",
+			"active_icon_ref": "res://Media/Icons/person-wave-svgrepo-com.svg"
+		},
+		{
+			"key": "nav-payments",
+			"title": "Payments",
+			"icon_ref": "res://Media/Icons/dollar-svgrepo-com.svg",
+			"active_icon_ref": "res://Media/Icons/dollar-svgrepo-com.svg"
+		}
+	]
+}

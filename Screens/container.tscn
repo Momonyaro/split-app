@@ -1,0 +1,127 @@
+[gd_scene load_steps=14 format=3 uid="uid://bmlh44oq8boum"]
+
+[ext_resource type="Texture2D" uid="uid://dunt0k3vmidiu" path="res://Media/Logo/logo_inline.svg" id="1_mapnv"]
+[ext_resource type="Script" uid="uid://fxj3w8v70uul" path="res://Components/Views/view_manager.gd" id="1_mbimq"]
+[ext_resource type="Texture2D" uid="uid://65xlri3bq18k" path="res://Media/Icons/cog-svgrepo-com.svg" id="2_h2v36"]
+[ext_resource type="PackedScene" uid="uid://bgmpq8bwrh0bi" path="res://Components/Views/Contacts/contacts_view.tscn" id="3_2ca32"]
+[ext_resource type="PackedScene" uid="uid://cf1i1jcj5v5f7" path="res://Components/Footer/footer.tscn" id="3_pltlb"]
+[ext_resource type="PackedScene" uid="uid://uupiaapfnd5w" path="res://Components/Views/Payments/payments_view.tscn" id="4_h2v36"]
+[ext_resource type="PackedScene" uid="uid://c06qu6sdmji3l" path="res://Components/Views/Home/home_view.tscn" id="4_hstka"]
+
+[sub_resource type="Gradient" id="Gradient_dti5a"]
+offsets = PackedFloat32Array(0, 0.639225, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.120785, 0.120785, 0.120785, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cwlli"]
+gradient = SubResource("Gradient_dti5a")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h2v36"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o364r"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h2v36"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mbimq"]
+content_margin_top = 32.0
+
+[node name="Container" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mbimq")
+views = Dictionary[String, PackedScene]({
+"nav-contacts": ExtResource("3_2ca32"),
+"nav-home": ExtResource("4_hstka"),
+"nav-payments": ExtResource("4_h2v36")
+})
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_cwlli")
+
+[node name="ProgramContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ProgramContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Header" type="HBoxContainer" parent="ProgramContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Logo" type="TextureRect" parent="ProgramContainer/VBoxContainer/Header"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+texture = ExtResource("1_mapnv")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Button" type="Button" parent="ProgramContainer/VBoxContainer/Header"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_h2v36")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_o364r")
+theme_override_styles/hover = SubResource("StyleBoxFlat_h2v36")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_o364r")
+theme_override_styles/normal = SubResource("StyleBoxFlat_h2v36")
+toggle_mode = true
+icon = ExtResource("2_h2v36")
+expand_icon = true
+
+[node name="ContentContainer" type="PanelContainer" parent="ProgramContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_mbimq")
+
+[node name="FooterContainer" parent="ProgramContainer/VBoxContainer" instance=ExtResource("3_pltlb")]
+layout_mode = 2

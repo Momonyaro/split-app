@@ -1,0 +1,44 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Split"
+run/main_scene="uid://c3qjjutwhpnl5"
+config/quit_on_go_back=false
+config/features=PackedStringArray("4.4")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+config/icon="uid://bcy07ljkvecha"
+
+[autoload]
+
+SQL="*res://Scripts/Globals/SQL.gd"
+
+[display]
+
+window/size/viewport_width=540
+window/size/viewport_height=1206
+window/frame_pacing/android/enable_frame_pacing=false
+window/frame_pacing/android/swappy_mode=0
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=1
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-sqlite/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

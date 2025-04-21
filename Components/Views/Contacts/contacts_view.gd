@@ -1,0 +1,69 @@
+extends Panel
+
+@export var list_item_prefab: PackedScene = preload("res://Components/Views/Contacts/contact_list_item.tscn");
+@export var no_content_prefab: PackedScene = preload("res://Components/Views/Contacts/no_content_item.tscn");
+@onready var contacts_list = $VBoxContainer/ScrollContainer/PanelContainer/VBoxContainer;
+@onready var sorting_menu: MenuButton = $VBoxContainer/MarginContainer/HBoxContainer/MenuButton;
+
+var last_sorting_id = 0;
+
+func _ready():
+	setup_sorting();
+	populate();
+
+func populate():
+	var contacts = SQL.contact_utils.get_contacts();
+
+	match last_sorting_id:
+		0:
+			contacts.sort_custom(func(a, b):
+				return a.name_given < b.name_given
+			);
+		1:
+			contacts.sort_custom(func(a, b):
+				return a.name_given > b.name_given
+			);
+
+	for child in contacts_list.get_children():
+		child.queue_free();
+
+	if contacts.size() == 0:
+		sorting_menu.disabled = true;
+		var no_content_item = no_content_prefab.instantiate();
+		contacts_list.add_child(no_content_item);
+	else:
+		sorting_menu.disabled = false;
+		for contact in contacts:
+			var contact_item = list_item_prefab.instantiate();
+			contact_item.populate(contact);
+			contacts_list.add_child(contact_item);
+
+	_create_padding();
+
+func setup_sorting():
+	var popup: PopupMenu = sorting_menu.get_popup();
+	popup.prefer_native_menu = true;
+
+	var last_index = popup.get_item_index(last_sorting_id);
+	if last_index != -1:
+		popup.set_item_checked(last_index, true);
+
+	popup.id_pressed.connect(_on_sorting_menu_id_pressed);
+
+func _on_sorting_menu_id_pressed(id: int):
+	var popup: PopupMenu = sorting_menu.get_popup();
+	var last_index = popup.get_item_index(last_sorting_id);
+	var current_index = popup.get_item_index(id);
+
+	if last_index != -1:
+		popup.set_item_checked(last_index, false);
+	if current_index != -1:
+		popup.set_item_checked(current_index, true);
+
+	last_sorting_id = id;
+	populate();
+
+func _create_padding():
+	var padding = BoxContainer.new()
+	padding.set_custom_minimum_size(Vector2(0, 128));
+	contacts_list.add_child(padding)

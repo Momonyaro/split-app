@@ -1,0 +1,24 @@
+extends Node
+class_name ModuleDBInitContacts;
+
+func setup(bootstrap: Node):
+	bootstrap.log_message("> Running ModuleDBInitContacts...");
+
+	# Check if contacts table exists and if not, create it.
+	SQL.query("
+		SELECT name FROM sqlite_master WHERE type='table'
+	");
+	var table_names = SQL.get_query_result().map(func (x): return x.name);
+
+	if not table_names.has("contacts"):
+		SQL.query("
+			CREATE TABLE contacts (
+				id int NOT NULL,
+				name_given varchar(255) DEFAULT 'John',
+				name_family varchar(255) DEFAULT 'Doe',
+				img_avatar blob,
+				PRIMARY KEY (id)
+			)
+		");
+
+	await get_tree().create_timer(0.15).timeout;

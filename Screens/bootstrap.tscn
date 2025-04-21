@@ -1,0 +1,128 @@
+[gd_scene load_steps=15 format=3 uid="uid://c3qjjutwhpnl5"]
+
+[ext_resource type="Script" uid="uid://bxm3w7elsqlir" path="res://Components/Boot/bootstrap.gd" id="1_hc42q"]
+[ext_resource type="Texture2D" uid="uid://gmpl1c3c1xbe" path="res://Media/Logo/logo_black.svg" id="1_tibdk"]
+[ext_resource type="PackedScene" uid="uid://bmlh44oq8boum" path="res://Screens/container.tscn" id="2_8qnnm"]
+[ext_resource type="PackedScene" uid="uid://bg25j6g5bk1eq" path="res://Components/Boot/boot_log.tscn" id="2_mxlc6"]
+[ext_resource type="Script" uid="uid://bpvtvq6so1llc" path="res://Components/Boot/Submodules/module_db_init.gd" id="3_2pso4"]
+[ext_resource type="Script" uid="uid://c7e0j2lcs7hjf" path="res://Components/Boot/Submodules/module_joke.gd" id="4_fh8pd"]
+[ext_resource type="Script" uid="uid://cqo6lgja537o5" path="res://Components/Boot/Submodules/module_db_init_contacts.gd" id="5_anv6a"]
+
+[sub_resource type="Gradient" id="Gradient_dti5a"]
+offsets = PackedFloat32Array(0, 0.639225, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.120785, 0.120785, 0.120785, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cwlli"]
+gradient = SubResource("Gradient_dti5a")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_2pso4"]
+offsets = PackedFloat32Array(0.267717, 0.538058, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.0813648, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fh8pd"]
+gradient = SubResource("Gradient_2pso4")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_anv6a"]
+texture = SubResource("GradientTexture2D_fh8pd")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2pso4"]
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+border_width_left = 2
+
+[sub_resource type="GDScript" id="GDScript_mxlc6"]
+resource_name = "BootstrapEditorActions"
+script/source = "@tool
+extends Node
+
+const DATASTORE_PATH = \"user://datastore.sqlite\";
+
+@export_tool_button(\"Clear Local Storage\", \"Delete\") var _action = _on_clear_storage;
+
+func _on_clear_storage():
+	if FileAccess.file_exists(DATASTORE_PATH):
+		print(\"deleting -> \", DATASTORE_PATH);
+		DirAccess.remove_absolute(DATASTORE_PATH);
+"
+
+[node name="Bootstrap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hc42q")
+target_scene = ExtResource("2_8qnnm")
+
+[node name="Modules" type="Node" parent="."]
+
+[node name="DB_INIT" type="Node" parent="Modules"]
+script = ExtResource("3_2pso4")
+
+[node name="DB_CONTACTS_INIT" type="Node" parent="Modules"]
+script = ExtResource("5_anv6a")
+
+[node name="JOKE" type="Node" parent="Modules"]
+script = ExtResource("4_fh8pd")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_cwlli")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -207.0
+offset_top = -246.0
+offset_right = 207.0
+offset_bottom = 168.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_tibdk")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -510.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 92
+theme_override_constants/margin_right = 92
+theme_override_constants/margin_bottom = 92
+
+[node name="BootLog" parent="MarginContainer" instance=ExtResource("2_mxlc6")]
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="MarginContainer"]
+clip_children = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_anv6a")
+
+[node name="Panel" type="Panel" parent="MarginContainer/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2pso4")
+
+[node name="EditorActions" type="Node" parent="."]
+script = SubResource("GDScript_mxlc6")
