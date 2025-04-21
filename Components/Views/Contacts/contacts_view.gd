@@ -24,7 +24,7 @@ func _exit_tree():
 func populate():
 	var contacts = SQL.contact_utils.get_contacts();
 
-	var id = PersistentData.try_get_persistent("contacts.sort");
+	var id = PersistentData.try_get_persistent(PersistentData.CONTACTS_SORT);
 	match id:
 		0:
 			contacts.sort_custom(func(a, b):
@@ -55,7 +55,7 @@ func setup_sorting():
 	var popup: PopupMenu = sorting_menu.get_popup();
 	popup.prefer_native_menu = true;
 
-	var id = PersistentData.try_get_persistent("contacts.sort");
+	var id = PersistentData.try_get_persistent(PersistentData.CONTACTS_SORT);
 	var last_index = popup.get_item_index(id);
 	if last_index != -1:
 		popup.set_item_checked(last_index, true);
@@ -64,7 +64,7 @@ func setup_sorting():
 
 func _on_sorting_menu_id_pressed(id: int):
 	var popup: PopupMenu = sorting_menu.get_popup();
-	var last_index = PersistentData.try_get_persistent("contacts.sort");
+	var last_index = PersistentData.try_get_persistent(PersistentData.CONTACTS_SORT);
 	var current_index = popup.get_item_index(id);
 
 	if last_index != -1:
@@ -72,7 +72,7 @@ func _on_sorting_menu_id_pressed(id: int):
 	if current_index != -1:
 		popup.set_item_checked(current_index, true);
 
-	PersistentData.write_persistent("contacts.sort", id);
+	PersistentData.write_persistent(PersistentData.CONTACTS_SORT, id);
 	populate();
 
 func _create_padding():

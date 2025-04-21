@@ -16,6 +16,13 @@ func _ready():
 	change_view(default_view_key);
 	pass;
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		if popover_stack.size() > 0:
+			popover_stack[-1]._t_close_menu();
+		else:
+			get_tree().quit();
+
 func change_view(view_key: String):
 	if views.has(view_key):
 		var view = views[view_key].instantiate();

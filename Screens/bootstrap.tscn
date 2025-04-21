@@ -66,7 +66,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hc42q")
-version = "b325059d13bc8b4a74854a9facb7cfa064001568
+version = "ccd33267065e13336ae9f92dea8871e0b4efb020
 "
 target_scene = ExtResource("2_8qnnm")
 
@@ -115,8 +115,8 @@ anchor_bottom = 1.0
 offset_top = -510.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/margin_left = 92
-theme_override_constants/margin_right = 92
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 92
 
 [node name="BootLog" parent="MarginContainer" instance=ExtResource("2_mxlc6")]

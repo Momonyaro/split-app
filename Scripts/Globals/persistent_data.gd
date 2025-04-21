@@ -1,8 +1,11 @@
 extends Node
 
+const SETTING_VIBRATE = "setting.vibrate";
+const CONTACTS_SORT = "contacts.sort";
+
 var _data = {
-	"setting.vibrate": true,
-	"contacts.sort": 0
+	SETTING_VIBRATE: true,
+	CONTACTS_SORT: 0
 };
 
 func write_persistent(key: String, value: Variant):
