@@ -13,9 +13,9 @@ func setup(bootstrap: Node):
 	if not table_names.has("contacts"):
 		SQL.query("
 			CREATE TABLE contacts (
-				id int NOT NULL,
-				name_given varchar(255) DEFAULT 'John',
-				name_family varchar(255) DEFAULT 'Doe',
+				id varchar(255) NOT NULL,
+				name_given varchar(255) NOT NULL DEFAULT 'John',
+				name_family varchar(255) NOT NULL DEFAULT 'Doe',
 				img_avatar blob,
 				PRIMARY KEY (id)
 			)

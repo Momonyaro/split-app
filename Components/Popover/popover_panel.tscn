@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://4h2qjmhnqt80"]
+
+[ext_resource type="Script" uid="uid://bsd7itm673fjs" path="res://Components/Popover/popover_menu.gd" id="1_tcsee"]
+[ext_resource type="Texture2D" uid="uid://byv7xwjey233w" path="res://Media/Icons/arrow-left-svgrepo-com.svg" id="2_ouoy4"]
+[ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="3_erdpo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_klihh"]
+bg_color = Color(0.0365563, 0.0365563, 0.0365563, 1)
+border_width_left = 2
+expand_margin_left = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gg21r"]
+border_width_left = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_puade"]
+font = ExtResource("3_erdpo")
+font_size = 32
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mbimq"]
+content_margin_top = 32.0
+
+[node name="PopoverPanel" type="PanelContainer"]
+z_index = 3
+offset_left = 552.0
+offset_right = 1092.0
+offset_bottom = 1206.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_klihh")
+script = ExtResource("1_tcsee")
+
+[node name="ProgramContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ProgramContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Header" type="HBoxContainer" parent="ProgramContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Button" type="Button" parent="ProgramContainer/VBoxContainer/Header"]
+layout_mode = 2
+theme_override_constants/icon_max_width = 32
+icon = ExtResource("2_ouoy4")
+
+[node name="VSeparator" type="VSeparator" parent="ProgramContainer/VBoxContainer/Header"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_gg21r")
+
+[node name="Label" type="Label" parent="ProgramContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Popover Title"
+label_settings = SubResource("LabelSettings_puade")
+vertical_alignment = 1
+
+[node name="ContentContainer" type="ScrollContainer" parent="ProgramContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_mbimq")
+horizontal_scroll_mode = 0

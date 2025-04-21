@@ -38,6 +38,10 @@ window/handheld/orientation=1
 
 enabled=PackedStringArray("res://addons/godot-sqlite/plugin.cfg")
 
+[global_group]
+
+$VIEW_MANAGER=""
+
 [rendering]
 
 renderer/rendering_method="mobile"

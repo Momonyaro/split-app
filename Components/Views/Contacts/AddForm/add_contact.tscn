@@ -1,0 +1,267 @@
+[gd_scene load_steps=14 format=3 uid="uid://cpl4oakc4r2l2"]
+
+[ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_1wcul"]
+[ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="1_r0bay"]
+[ext_resource type="Texture2D" uid="uid://b5f4wehxfbxxd" path="res://Media/Icons/image-svgrepo-com.svg" id="1_sijlt"]
+[ext_resource type="Script" uid="uid://okhy45kfai5f" path="res://Components/Views/Contacts/AddForm/add_contact_form.gd" id="2_4j8na"]
+[ext_resource type="FontFile" uid="uid://bu2il8aandv8j" path="res://Fonts/JetBrainsMono-Light.ttf" id="4_mn737"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a0aip"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1wcul"]
+font = ExtResource("1_r0bay")
+font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a0aip"]
+bg_color = Color(0.192914, 0.192914, 0.192914, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mn737"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4j8na"]
+draw_center = false
+border_width_top = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1wcul"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_4j8na"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mn737"]
+font_color = Color(0.92549, 0, 0.00392157, 1)
+
+[node name="AddContactView" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_1wcul")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_a0aip")
+script = ExtResource("2_4j8na")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Contact Avatar"
+label_settings = SubResource("LabelSettings_1wcul")
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(13, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.511654, 0.511654, 0.511654, 1)
+theme_override_fonts/font = ExtResource("4_mn737")
+theme_override_font_sizes/font_size = 16
+text = "> Upload an image from your device to act as an avatar for your new contact."
+autowrap_mode = 3
+
+[node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(13, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.511654, 0.511654, 0.511654, 1)
+theme_override_fonts/font = ExtResource("4_mn737")
+theme_override_font_sizes/font_size = 16
+text = "max size: 5MB, (.png, .jpg, .JPEG)"
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer"]
+clip_children = 2
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a0aip")
+
+[node name="placeholder" type="TextureRect" parent="VBoxContainer/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_sijlt")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="avatar_upload" type="Button" parent="VBoxContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mn737")
+flat = true
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+theme_override_styles/separator = SubResource("StyleBoxFlat_4j8na")
+
+[node name="GivenName" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1wcul")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/GivenName"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/GivenName/VBoxContainer"]
+layout_mode = 2
+
+[node name="Required" type="Label" parent="VBoxContainer/GivenName/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "*"
+
+[node name="Label" type="Label" parent="VBoxContainer/GivenName/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Given Name"
+label_settings = SubResource("LabelSettings_4j8na")
+
+[node name="GivenNameField" type="LineEdit" parent="VBoxContainer/GivenName/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Example"
+clear_button_enabled = true
+flat = true
+select_all_on_focus = true
+caret_blink = true
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer/GivenName/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Given Name was invalid"
+label_settings = SubResource("LabelSettings_mn737")
+
+[node name="FamilyName" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1wcul")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/FamilyName"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/FamilyName/VBoxContainer"]
+layout_mode = 2
+
+[node name="Required" type="Label" parent="VBoxContainer/FamilyName/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "*"
+
+[node name="Label" type="Label" parent="VBoxContainer/FamilyName/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Family Name"
+label_settings = SubResource("LabelSettings_4j8na")
+
+[node name="FamilyNameField" type="LineEdit" parent="VBoxContainer/FamilyName/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Exampleson"
+clear_button_enabled = true
+flat = true
+select_all_on_focus = true
+caret_blink = true
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer/FamilyName/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Given Name was invalid"
+label_settings = SubResource("LabelSettings_mn737")
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.335116, 0.335116, 0.335116, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/paragraph_spacing = 0
+theme_override_font_sizes/font_size = 16
+text = "ID -> ctact_c27b06043e08d9b19b0051ca44d2cd2d"
+uppercase = true
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Submit" type="Button" parent="VBoxContainer/MarginContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PrimaryButton"
+text = "Submit"
+
+[node name="Cancel" type="Button" parent="VBoxContainer/MarginContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SecondaryButton"
+text = "Cancel"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+popup_window = true
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png,*.jpg,*.jpeg;Image Files;image/png,image/jpeg")
+use_native_dialog = true
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Panel/avatar_upload" to="." method="_on_avatar_upload_pressed"]
+[connection signal="text_changed" from="VBoxContainer/GivenName/VBoxContainer/GivenNameField" to="." method="_on_given_name_field_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/FamilyName/VBoxContainer/FamilyNameField" to="." method="_on_family_name_field_text_changed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/Buttons/Submit" to="." method="_on_submit"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/Buttons/Cancel" to="." method="_on_cancel_pressed"]

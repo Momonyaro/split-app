@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bmlh44oq8boum"]
+[gd_scene load_steps=16 format=3 uid="uid://bmlh44oq8boum"]
 
 [ext_resource type="Texture2D" uid="uid://dunt0k3vmidiu" path="res://Media/Logo/logo_inline.svg" id="1_mapnv"]
 [ext_resource type="Script" uid="uid://fxj3w8v70uul" path="res://Components/Views/view_manager.gd" id="1_mbimq"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://cf1i1jcj5v5f7" path="res://Components/Footer/footer.tscn" id="3_pltlb"]
 [ext_resource type="PackedScene" uid="uid://uupiaapfnd5w" path="res://Components/Views/Payments/payments_view.tscn" id="4_h2v36"]
 [ext_resource type="PackedScene" uid="uid://c06qu6sdmji3l" path="res://Components/Views/Home/home_view.tscn" id="4_hstka"]
+[ext_resource type="PackedScene" uid="uid://cpl4oakc4r2l2" path="res://Components/Views/Contacts/AddForm/add_contact.tscn" id="5_o364r"]
+[ext_resource type="PackedScene" uid="uid://d360dt3x43417" path="res://Components/Views/Settings/settings_view.tscn" id="6_klihh"]
 
 [sub_resource type="Gradient" id="Gradient_dti5a"]
 offsets = PackedFloat32Array(0, 0.639225, 1)
@@ -54,7 +56,7 @@ corner_radius_bottom_left = 8
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mbimq"]
 content_margin_top = 32.0
 
-[node name="Container" type="Control"]
+[node name="ViewManager" type="Control" groups=["$VIEW_MANAGER"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -63,9 +65,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mbimq")
 views = Dictionary[String, PackedScene]({
+"nav-add-contact": ExtResource("5_o364r"),
 "nav-contacts": ExtResource("3_2ca32"),
 "nav-home": ExtResource("4_hstka"),
-"nav-payments": ExtResource("4_h2v36")
+"nav-payments": ExtResource("4_h2v36"),
+"nav-settings": ExtResource("6_klihh")
 })
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -103,7 +107,7 @@ texture = ExtResource("1_mapnv")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="Button" type="Button" parent="ProgramContainer/VBoxContainer/Header"]
+[node name="Settings" type="Button" parent="ProgramContainer/VBoxContainer/Header"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -114,7 +118,6 @@ theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_o364r")
 theme_override_styles/hover = SubResource("StyleBoxFlat_h2v36")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_o364r")
 theme_override_styles/normal = SubResource("StyleBoxFlat_h2v36")
-toggle_mode = true
 icon = ExtResource("2_h2v36")
 expand_icon = true
 
@@ -125,3 +128,14 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_mbimq")
 
 [node name="FooterContainer" parent="ProgramContainer/VBoxContainer" instance=ExtResource("3_pltlb")]
 layout_mode = 2
+
+[node name="PopoverContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[connection signal="pressed" from="ProgramContainer/VBoxContainer/Header/Settings" to="." method="_on_settings_pressed"]

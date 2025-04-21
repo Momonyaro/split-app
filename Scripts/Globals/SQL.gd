@@ -15,8 +15,11 @@ func _ready() -> void:
 func query(_query: String):
 	_sqlite.query(_query);
 
+func query_with_bindings(_query: String, _bindings: Array) -> bool:
+	return _sqlite.query_with_bindings(_query, _bindings);
+
 func get_query_result() -> Array[Dictionary]:
-	return _sqlite.query_result;
+	return _sqlite.query_result;;
 
 func _exit_tree() -> void:
 	_sqlite.close_db();

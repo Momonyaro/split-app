@@ -1,33 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxe747fd2frqo"]
+[gd_scene load_steps=5 format=3 uid="uid://dxe747fd2frqo"]
 
-[ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="1_qkkb8"]
+[ext_resource type="Script" uid="uid://cxqgxx0423664" path="res://Components/Buttons/floating_button.gd" id="1_k3646"]
+[ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_kk46q"]
 [ext_resource type="Texture2D" uid="uid://dgb45u0p24wq1" path="res://Media/Icons/plus-svgrepo-com.svg" id="2_k3646"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n2vv8"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tul34"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lc5f8"]
-content_margin_left = 24.0
-content_margin_top = 16.0
-content_margin_right = 24.0
-content_margin_bottom = 16.0
-bg_color = Color(0.615829, 0.615828, 0.615829, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8fpwb"]
-content_margin_left = 24.0
-content_margin_top = 16.0
-content_margin_right = 24.0
-content_margin_bottom = 16.0
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
 
 [node name="FloatingButton" type="PanelContainer"]
 z_index = 1
@@ -40,7 +17,9 @@ offset_left = -40.0
 offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = ExtResource("1_kk46q")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_n2vv8")
+script = ExtResource("1_k3646")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -50,27 +29,8 @@ theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
 [node name="Button" type="Button" parent="MarginContainer"]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_constants/h_separation = 8
-theme_override_constants/icon_max_width = 24
-theme_override_fonts/font = ExtResource("1_qkkb8")
-theme_override_font_sizes/font_size = 24
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tul34")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_lc5f8")
-theme_override_styles/hover = SubResource("StyleBoxFlat_8fpwb")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_lc5f8")
-theme_override_styles/normal = SubResource("StyleBoxFlat_8fpwb")
-text = "ADD"
+theme_type_variation = &"PrimaryButton"
 icon = ExtResource("2_k3646")
+expand_icon = true

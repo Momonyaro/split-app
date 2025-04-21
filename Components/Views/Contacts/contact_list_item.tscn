@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c55cciwn63htn"]
+[gd_scene load_steps=10 format=3 uid="uid://c55cciwn63htn"]
 
 [ext_resource type="Texture2D" uid="uid://bwnh85uo7uhcj" path="res://icon.svg" id="1_3t4vj"]
 [ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="2_v0265"]
@@ -39,6 +39,8 @@ func populate(contact: Dictionary):
 		pass;
 	else:
 		# Load image into texture
+		var img := ImageUtils._file_data_to_image(contact.img_avatar);
+		avatar_panel.get_child(0).texture = ImageTexture.create_from_image(img);
 		pass;
 	
 	pass;
@@ -62,9 +64,6 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8fpwb"]
-texture = ExtResource("1_3t4vj")
 
 [sub_resource type="LabelSettings" id="LabelSettings_3t4vj"]
 font = ExtResource("2_v0265")
@@ -98,16 +97,18 @@ custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_5s7e5")
 
-[node name="Avatar" type="Panel" parent="MarginContainer/HBoxContainer/Panel"]
+[node name="Avatar" type="TextureRect" parent="MarginContainer/HBoxContainer/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_8fpwb")
+texture = ExtResource("1_3t4vj")
+expand_mode = 1
 
 [node name="ColoredBack" type="ColorRect" parent="MarginContainer/HBoxContainer/Panel"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

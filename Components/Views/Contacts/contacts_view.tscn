@@ -1,41 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://bgmpq8bwrh0bi"]
+[gd_scene load_steps=11 format=3 uid="uid://bgmpq8bwrh0bi"]
 
 [ext_resource type="PackedScene" uid="uid://dxe747fd2frqo" path="res://Components/Buttons/floating_button.tscn" id="1_jlfwf"]
 [ext_resource type="Script" uid="uid://cff5y6cwndoy8" path="res://Components/Views/Contacts/contacts_view.gd" id="1_lc5f8"]
-[ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="1_tul34"]
+[ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="2_5s7e5"]
 [ext_resource type="Texture2D" uid="uid://uctrq5063hpa" path="res://Media/Icons/sort-svgrepo-com.svg" id="3_5s7e5"]
 [ext_resource type="PackedScene" uid="uid://c8neghqtch1nh" path="res://Components/Views/Contacts/no_content_item.tscn" id="4_8vwvv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lc5f8"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5s7e5"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5s7e5"]
-content_margin_left = 16.0
-content_margin_top = 8.0
-content_margin_right = 16.0
-content_margin_bottom = 8.0
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="Theme" id="Theme_5s7e5"]
-default_font = ExtResource("1_tul34")
-default_font_size = 24
-Label/font_sizes/font_size = 24
-Label/fonts/font = ExtResource("1_tul34")
-PopupMenu/colors/font_color = Color(1, 1, 1, 1)
-PopupMenu/colors/font_hover_color = Color(0.591518, 0.591518, 0.591518, 1)
-PopupMenu/constants/h_separation = 8
-PopupMenu/constants/v_separation = 8
-PopupMenu/styles/hover = SubResource("StyleBoxEmpty_5s7e5")
-PopupMenu/styles/panel = SubResource("StyleBoxFlat_5s7e5")
 
 [sub_resource type="Gradient" id="Gradient_jlfwf"]
 offsets = PackedFloat32Array(0, 0.792651, 1)
@@ -80,7 +51,7 @@ alignment = 2
 
 [node name="MenuButton" type="MenuButton" parent="VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-theme = SubResource("Theme_5s7e5")
+theme = ExtResource("2_5s7e5")
 theme_override_constants/h_separation = 8
 theme_override_constants/icon_max_width = 24
 text = "Sort"
@@ -120,5 +91,5 @@ layout_mode = 2
 
 [node name="FloatingButton" parent="." instance=ExtResource("1_jlfwf")]
 layout_mode = 1
-offset_left = -182.0
-offset_top = -97.0
+offset_left = -96.0
+offset_top = -96.0

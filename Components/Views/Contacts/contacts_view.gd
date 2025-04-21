@@ -2,14 +2,26 @@ extends Panel
 
 @export var list_item_prefab: PackedScene = preload("res://Components/Views/Contacts/contact_list_item.tscn");
 @export var no_content_prefab: PackedScene = preload("res://Components/Views/Contacts/no_content_item.tscn");
+
 @onready var contacts_list = $VBoxContainer/ScrollContainer/PanelContainer/VBoxContainer;
 @onready var sorting_menu: MenuButton = $VBoxContainer/MarginContainer/HBoxContainer/MenuButton;
+@onready var floating_button: FloatingButton = $FloatingButton;
 
 var last_sorting_id = 0;
 
 func _ready():
+	var view_manager = get_tree().get_first_node_in_group("$VIEW_MANAGER");
+	floating_button.pressed.connect(func():
+		view_manager.show_popover("Add Contact", 'nav-add-contact')
+	);
+
+	SQL.contact_utils.contact_added.connect(_on_contact_added);
+
 	setup_sorting();
 	populate();
+
+func _exit_tree():
+	SQL.contact_utils.contact_added.disconnect(_on_contact_added);
 
 func populate():
 	var contacts = SQL.contact_utils.get_contacts();
@@ -67,3 +79,6 @@ func _create_padding():
 	var padding = BoxContainer.new()
 	padding.set_custom_minimum_size(Vector2(0, 128));
 	contacts_list.add_child(padding)
+
+func _on_contact_added(_id: String):
+	populate();
