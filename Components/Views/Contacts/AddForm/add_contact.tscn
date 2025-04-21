@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://cpl4oakc4r2l2"]
+[gd_scene load_steps=15 format=3 uid="uid://cpl4oakc4r2l2"]
 
 [ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_1wcul"]
 [ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="1_r0bay"]
 [ext_resource type="Texture2D" uid="uid://b5f4wehxfbxxd" path="res://Media/Icons/image-svgrepo-com.svg" id="1_sijlt"]
 [ext_resource type="Script" uid="uid://okhy45kfai5f" path="res://Components/Views/Contacts/AddForm/add_contact_form.gd" id="2_4j8na"]
 [ext_resource type="FontFile" uid="uid://bu2il8aandv8j" path="res://Fonts/JetBrainsMono-Light.ttf" id="4_mn737"]
+[ext_resource type="Texture2D" uid="uid://dptco6a2j2txr" path="res://Media/Icons/arrow-turn-left-down-svgrepo-com.svg" id="6_q4cc7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a0aip"]
 
@@ -131,6 +132,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
+stretch_mode = 6
 
 [node name="avatar_upload" type="Button" parent="VBoxContainer/HBoxContainer/Panel"]
 layout_mode = 1
@@ -141,6 +143,19 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_mn737")
 flat = true
+
+[node name="img_rotate" type="Button" parent="VBoxContainer/HBoxContainer/Panel"]
+z_index = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+offset_left = -24.0
+offset_top = -20.0
+offset_right = 24.0
+offset_bottom = 28.0
+pivot_offset = Vector2(32, 32)
+icon = ExtResource("6_q4cc7")
+flat = true
+expand_icon = true
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
@@ -223,28 +238,31 @@ theme_override_colors/font_color = Color(0.335116, 0.335116, 0.335116, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/paragraph_spacing = 0
 theme_override_font_sizes/font_size = 16
-text = "ID -> ctact_c27b06043e08d9b19b0051ca44d2cd2d"
+text = "ID -> ctact_c27b0604"
 uppercase = true
 
-[node name="Control" type="Control" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(0, 64)
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -54.0
+grow_horizontal = 2
+grow_vertical = 0
 
-[node name="Buttons" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+[node name="Buttons" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Submit" type="Button" parent="VBoxContainer/MarginContainer/Buttons"]
+[node name="Submit" type="Button" parent="MarginContainer/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"PrimaryButton"
 text = "Submit"
 
-[node name="Cancel" type="Button" parent="VBoxContainer/MarginContainer/Buttons"]
+[node name="Cancel" type="Button" parent="MarginContainer/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"SecondaryButton"
@@ -261,7 +279,8 @@ filters = PackedStringArray("*.png,*.jpg,*.jpeg;Image Files;image/png,image/jpeg
 use_native_dialog = true
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Panel/avatar_upload" to="." method="_on_avatar_upload_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Panel/img_rotate" to="." method="_on_img_rotate_pressed"]
 [connection signal="text_changed" from="VBoxContainer/GivenName/VBoxContainer/GivenNameField" to="." method="_on_given_name_field_text_changed"]
 [connection signal="text_changed" from="VBoxContainer/FamilyName/VBoxContainer/FamilyNameField" to="." method="_on_family_name_field_text_changed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/Buttons/Submit" to="." method="_on_submit"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/Buttons/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="MarginContainer/Buttons/Submit" to="." method="_on_submit"]
+[connection signal="pressed" from="MarginContainer/Buttons/Cancel" to="." method="_on_cancel_pressed"]

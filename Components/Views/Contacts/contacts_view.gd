@@ -7,8 +7,6 @@ extends Panel
 @onready var sorting_menu: MenuButton = $VBoxContainer/MarginContainer/HBoxContainer/MenuButton;
 @onready var floating_button: FloatingButton = $FloatingButton;
 
-var last_sorting_id = 0;
-
 func _ready():
 	var view_manager = get_tree().get_first_node_in_group("$VIEW_MANAGER");
 	floating_button.pressed.connect(func():
@@ -26,7 +24,8 @@ func _exit_tree():
 func populate():
 	var contacts = SQL.contact_utils.get_contacts();
 
-	match last_sorting_id:
+	var id = PersistentData.try_get_persistent("contacts.sort");
+	match id:
 		0:
 			contacts.sort_custom(func(a, b):
 				return a.name_given < b.name_given
@@ -56,7 +55,8 @@ func setup_sorting():
 	var popup: PopupMenu = sorting_menu.get_popup();
 	popup.prefer_native_menu = true;
 
-	var last_index = popup.get_item_index(last_sorting_id);
+	var id = PersistentData.try_get_persistent("contacts.sort");
+	var last_index = popup.get_item_index(id);
 	if last_index != -1:
 		popup.set_item_checked(last_index, true);
 
@@ -64,7 +64,7 @@ func setup_sorting():
 
 func _on_sorting_menu_id_pressed(id: int):
 	var popup: PopupMenu = sorting_menu.get_popup();
-	var last_index = popup.get_item_index(last_sorting_id);
+	var last_index = PersistentData.try_get_persistent("contacts.sort");
 	var current_index = popup.get_item_index(id);
 
 	if last_index != -1:
@@ -72,7 +72,7 @@ func _on_sorting_menu_id_pressed(id: int):
 	if current_index != -1:
 		popup.set_item_checked(current_index, true);
 
-	last_sorting_id = id;
+	PersistentData.write_persistent("contacts.sort", id);
 	populate();
 
 func _create_padding():

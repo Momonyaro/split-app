@@ -1,6 +1,9 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://0y4va3gywhgo"]
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://0y4va3gywhgo"]
 
 [ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="1_07w4d"]
+[ext_resource type="FontFile" uid="uid://bu2il8aandv8j" path="res://Fonts/JetBrainsMono-Light.ttf" id="1_exhwa"]
+[ext_resource type="Texture2D" uid="uid://o8iagxcqf7vh" path="res://Media/Icons/toggle-circle-right-svgrepo-com.svg" id="1_q2jrd"]
+[ext_resource type="Texture2D" uid="uid://cqod3awwewv6g" path="res://Media/Icons/toggle-circle-left-svgrepo-com.svg" id="2_exhwa"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5s7e5"]
 
@@ -91,6 +94,11 @@ corner_radius_bottom_left = 16
 [resource]
 default_font = ExtResource("1_07w4d")
 default_font_size = 24
+CheckButton/constants/icon_max_width = 32
+CheckButton/font_sizes/font_size = 24
+CheckButton/fonts/font = ExtResource("1_exhwa")
+CheckButton/icons/checked = ExtResource("1_q2jrd")
+CheckButton/icons/unchecked = ExtResource("2_exhwa")
 Label/font_sizes/font_size = 24
 Label/fonts/font = ExtResource("1_07w4d")
 PopupMenu/colors/font_color = Color(1, 1, 1, 1)

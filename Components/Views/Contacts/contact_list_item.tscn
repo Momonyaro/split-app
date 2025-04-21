@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c55cciwn63htn"]
+[gd_scene load_steps=11 format=3 uid="uid://c55cciwn63htn"]
 
 [ext_resource type="Texture2D" uid="uid://bwnh85uo7uhcj" path="res://icon.svg" id="1_3t4vj"]
 [ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="2_v0265"]
@@ -39,7 +39,10 @@ func populate(contact: Dictionary):
 		pass;
 	else:
 		# Load image into texture
-		var img := ImageUtils._file_data_to_image(contact.img_avatar);
+		var format = (contact.img_avatar as PackedByteArray)[0];
+		var img_data = (contact.img_avatar as PackedByteArray).slice(1);
+		
+		var img := Image.create_from_data(256, 256, false, format, img_data);
 		avatar_panel.get_child(0).texture = ImageTexture.create_from_image(img);
 		pass;
 	
@@ -75,6 +78,8 @@ font_size = 20
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5s7e5"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3t4vj"]
+
 [node name="ContactListItem" type="PanelContainer"]
 theme_override_styles/panel = SubResource("StyleBoxFlat_8fpwb")
 script = SubResource("GDScript_3t4vj")
@@ -106,6 +111,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_3t4vj")
 expand_mode = 1
+stretch_mode = 6
 
 [node name="ColoredBack" type="ColorRect" parent="MarginContainer/HBoxContainer/Panel"]
 visible = false
@@ -149,3 +155,8 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_5s7e5")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_5s7e5")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_5s7e5")
 icon = ExtResource("3_707dx")
+
+[node name="edit_btn" type="Button" parent="."]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3t4vj")
+flat = true

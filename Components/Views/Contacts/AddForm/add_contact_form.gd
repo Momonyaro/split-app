@@ -1,11 +1,11 @@
 extends Panel
 
-
 @onready var id_label = $VBoxContainer/Label;
 @onready var given_name_field = $VBoxContainer/GivenName;
 @onready var family_name_field = $VBoxContainer/FamilyName;
 @onready var file_dialog = $FileDialog;
 @onready var avatar_texrect = $VBoxContainer/HBoxContainer/Panel/TextureRect;
+@onready var rotate_button = $VBoxContainer/HBoxContainer/Panel/img_rotate;
 
 var popover_parent: PopoverMenu; # Will be assigned by parent
 
@@ -17,10 +17,14 @@ var form_data = {
 };
 
 func _ready():
+	OS.request_permissions();
 	form_data["id"] = _create_id();
 	file_dialog.file_selected.connect(_on_avatar_uploaded);
 
 	id_label.text = str('id -> ', form_data["id"]);
+
+func _process(_delta):
+	rotate_button.visible = form_data.img_avatar != null;
 
 func _create_id() -> String:
 	var date_time = Time.get_datetime_string_from_system();
@@ -28,11 +32,11 @@ func _create_id() -> String:
 	return str('ctact_', to_hash).to_upper();
 
 func _on_family_name_field_text_changed(new_text:String):
-	form_data["name_family"] = new_text;
+	form_data["name_family"] = new_text.strip_edges();
 	pass # Replace with function body.
 
 func _on_given_name_field_text_changed(new_text:String):
-	form_data["name_given"] = new_text;
+	form_data["name_given"] = new_text.strip_edges();
 	pass # Replace with function body.
 
 func _validate_form() -> bool:
@@ -81,5 +85,13 @@ func _on_avatar_uploaded(file_path: String):
 	var img_tex = ImageTexture.create_from_image(ImageUtils._file_data_to_image(file));
 	avatar_texrect.texture = img_tex;
 
-	form_data["img_avatar"] = file;
+	form_data["img_avatar"] = ImageUtils.pack_img_data(img_tex.get_image());
+	pass # Replace with function body.
+
+
+func _on_img_rotate_pressed() -> void:
+	var img = (avatar_texrect.texture as ImageTexture).get_image();
+	img.rotate_90(COUNTERCLOCKWISE);
+	avatar_texrect.texture = ImageTexture.create_from_image(img);
+	form_data.img_avatar = ImageUtils.pack_img_data(img);
 	pass # Replace with function body.

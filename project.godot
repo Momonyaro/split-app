@@ -23,6 +23,7 @@ config/icon="uid://bcy07ljkvecha"
 [autoload]
 
 SQL="*res://Scripts/Globals/SQL.gd"
+PersistentData="*res://Scripts/Globals/persistent_data.gd"
 
 [display]
 
