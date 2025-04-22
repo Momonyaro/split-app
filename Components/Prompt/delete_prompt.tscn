@@ -1,0 +1,118 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhv132hmgk21"]
+
+[ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_wsv2p"]
+[ext_resource type="Texture2D" uid="uid://ca4bn843a7636" path="res://Media/Icons/bomb-svgrepo-com.svg" id="2_c6jvw"]
+[ext_resource type="Script" uid="uid://cp4qpldrxcpml" path="res://Components/Prompt/delete_prompt.gd" id="2_fe0ex"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_klihh"]
+content_margin_left = 32.0
+content_margin_top = 32.0
+content_margin_right = 32.0
+content_margin_bottom = 32.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="DeletePrompt" type="Control"]
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_wsv2p")
+script = ExtResource("2_fe0ex")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.580392)
+
+[node name="RED_FILL" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.556558, 0, 0.0119107, 0.466667)
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -126.0
+offset_top = -169.0
+offset_right = 126.0
+offset_bottom = 169.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(126, 338)
+theme_override_styles/panel = SubResource("StyleBoxFlat_klihh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 16
+
+[node name="Header" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Are you sure?"
+horizontal_alignment = 1
+
+[node name="Instructions" type="Label" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.250576, 0.250576, 0.250576, 1)
+theme_override_font_sizes/font_size = 16
+text = "Keep your finger on the bomb for 3 seconds."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="BombButton" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/icon_max_width = 128
+icon = ExtResource("2_c6jvw")
+flat = true
+icon_alignment = 1
+
+[node name="Control" type="Control" parent="PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+
+[node name="Instructions" type="Label" parent="PanelContainer/Control"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 48.0
+offset_bottom = 95.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.250576, 0.250576, 0.250576, 1)
+theme_override_font_sizes/font_size = 16
+text = "Tap outside to close"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[connection signal="gui_input" from="ColorRect" to="." method="_on_background_gui_input"]
+[connection signal="button_down" from="PanelContainer/VBoxContainer/BombButton" to="." method="_on_bomb_button_down"]
+[connection signal="button_up" from="PanelContainer/VBoxContainer/BombButton" to="." method="_on_bomb_button_up"]

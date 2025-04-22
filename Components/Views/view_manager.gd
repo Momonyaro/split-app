@@ -10,6 +10,7 @@ var popover_prefab: PackedScene = preload("res://Components/Popover/popover_pane
 var popover_stack = [];
 
 func _ready():
+	popover_container.show();
 	navigation.on_nav_changed.connect(_on_nav_changed);
 
 	var default_view_key = navigation.default_section;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d360dt3x43417"]
+[gd_scene load_steps=15 format=3 uid="uid://d360dt3x43417"]
 
 [ext_resource type="Script" uid="uid://f7aukbvkyf5i" path="res://Components/Views/Settings/settings_view.gd" id="1_spe6d"]
 [ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_w63qv"]
@@ -51,7 +51,52 @@ func _on_toggle(active: bool):
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w63qv"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r5dsb"]
+[sub_resource type="GDScript" id="GDScript_xpa5q"]
+resource_name = "ButtonSetting"
+script/source = "extends PanelContainer
+
+@onready var action = $ACTION;
+var initialized = false;
+
+func _ready():
+	initialized = true;
+	$HBoxContainer/Button.pressed.connect(_on_pressed);
+
+func _on_pressed():
+	action.execute();
+"
+
+[sub_resource type="GDScript" id="GDScript_r5dsb"]
+resource_name = "WipeDataAction"
+script/source = "extends Node
+
+var prompt = preload(\"res://Components/Prompt/delete_prompt.tscn\");
+
+func execute():
+	var instance = prompt.instantiate();
+	get_tree().root.add_child(instance);
+	instance.set_explode_action(_on_explosion);
+
+func _on_explosion():
+	if FileAccess.file_exists(SQL.DATASTORE_PATH):
+		DirAccess.remove_absolute(SQL.DATASTORE_PATH);
+		SQL.restart();
+		await get_tree().create_timer(0.01).timeout;
+		get_tree().change_scene_to_file(\"res://Screens/bootstrap.tscn\");
+	pass;
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xpa5q"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [sub_resource type="GDScript" id="GDScript_2hx14"]
 resource_name = "VersionPrinter"
@@ -105,25 +150,26 @@ layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_w63qv")
 text = "Vibration"
 
-[node name="ToggleSetting2" type="PanelContainer" parent="VBoxContainer"]
+[node name="ButtonSetting" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_y886q")
+script = SubResource("GDScript_xpa5q")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ToggleSetting2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ButtonSetting"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ToggleSetting2/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ButtonSetting/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/ToggleSetting2/HBoxContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer/ButtonSetting/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("4_xpa5q")
 text = "Delete Data?"
 
-[node name="Label2" type="Label" parent="VBoxContainer/ToggleSetting2/HBoxContainer/VBoxContainer"]
+[node name="Subtitle" type="Label" parent="VBoxContainer/ButtonSetting/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -132,11 +178,14 @@ theme_override_fonts/font = ExtResource("4_xpa5q")
 theme_override_font_sizes/font_size = 16
 text = "This is an IRREVERSIBLE action!"
 
-[node name="Button" type="Button" parent="VBoxContainer/ToggleSetting2/HBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer/ButtonSetting/HBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"DeleteButton"
 text = "Delete"
 icon = ExtResource("4_r5dsb")
+
+[node name="ACTION" type="Node" parent="VBoxContainer/ButtonSetting"]
+script = SubResource("GDScript_r5dsb")
 
 [node name="Header - About" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -148,14 +197,14 @@ text = "About"
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_r5dsb")
+theme_override_styles/panel = SubResource("StyleBoxFlat_xpa5q")
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
+theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_bottom = 48
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer"]
 layout_mode = 2

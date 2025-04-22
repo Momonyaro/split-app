@@ -12,6 +12,13 @@ func _ready() -> void:
 
 	pass;
 
+func restart():
+	_sqlite.close_db();
+	if !FileAccess.file_exists(DATASTORE_PATH):
+		var file = FileAccess.open(DATASTORE_PATH, FileAccess.WRITE);
+		file.close();
+	_sqlite.open_db();
+
 func query(_query: String):
 	_sqlite.query(_query);
 

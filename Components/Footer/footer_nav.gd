@@ -34,7 +34,7 @@ func on_nav_item_selected(item_key: StringName):
 	if current_section != item_key:
 		on_nav_changed.emit(item_key);
 		if PersistentData.try_get_persistent(PersistentData.SETTING_VIBRATE):
-			Input.vibrate_handheld(50); # Slight vibration for device feedback
+			Input.vibrate_handheld(50, .2); # Slight vibration for device feedback
 	current_section = item_key;
 	update_list();
 
