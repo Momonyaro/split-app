@@ -26,6 +26,8 @@ func _process(delta: float) -> void:
 		if _fuse >= fuse_time:
 			fuse_lit = false;
 			exploded = true;
+			if PersistentData.try_get_persistent(PersistentData.SETTING_VIBRATE):
+				Input.vibrate_handheld(80, .7); # Slight vibration for device feedback
 			_tween_out();
 	elif not exploded && not defused:
 		_fuse -= delta * 3;
