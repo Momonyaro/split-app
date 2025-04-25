@@ -13,13 +13,13 @@ func _ready():
 		view_manager.show_popover("Add Contact", 'nav-add-contact')
 	);
 
-	SQL.contact_utils.contact_added.connect(_on_contact_added);
+	SQL.contact_utils.contacts_changed.connect(_on_contact_added);
 
 	setup_sorting();
 	populate();
 
 func _exit_tree():
-	SQL.contact_utils.contact_added.disconnect(_on_contact_added);
+	SQL.contact_utils.contacts_changed.disconnect(_on_contact_added);
 
 func populate():
 	var contacts = SQL.contact_utils.get_contacts();
@@ -34,6 +34,8 @@ func populate():
 			contacts.sort_custom(func(a, b):
 				return a.name_given > b.name_given
 			);
+		2:
+			contacts.shuffle();
 
 	for child in contacts_list.get_children():
 		child.queue_free();

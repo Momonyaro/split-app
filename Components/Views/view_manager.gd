@@ -25,14 +25,18 @@ func _notification(what: int) -> void:
 			get_tree().quit();
 
 func change_view(view_key: String):
-	if views.has(view_key):
-		var view = views[view_key].instantiate();
+	var split_key = _convert_string(view_key);
+	var first_key = split_key.pop_front();
+	if views.has(first_key):
+		var view = views[first_key].instantiate();
 		view.hide();
 
 		for child in view_container.get_children():
 			child.queue_free();
 
 		view_container.add_child(view);
+		if split_key.size() > 0:
+			view.set_subsection(split_key);
 
 		view.show();
 		await _tween_view();
@@ -40,11 +44,15 @@ func change_view(view_key: String):
 		print("View not found");
 
 func show_popover(title: String, view_key: String):
-	if views.has(view_key):
-		var packed_view: PackedScene = views[view_key];
+	var split_key = _convert_string(view_key);
+	var first_key = split_key.pop_front();
+	if views.has(first_key) && popover_stack.is_empty():
+		var packed_view: PackedScene = views[first_key];
 		var popover_instance = popover_prefab.instantiate() as PopoverMenu;
 		popover_instance.menu_contents = packed_view;
 		popover_instance.set_title(title);
+		if split_key.size() > 0:
+			popover_instance.set_subsection(split_key);
 
 		popover_container.add_child(popover_instance);
 
@@ -58,6 +66,9 @@ func pop_popover():
 
 	var popover = popover_stack.pop_back();
 	popover.queue_free();
+
+func _convert_string(string: String) -> Array:
+	return string.split("/");
 
 func _tween_view():
 	view_container.get_child(0).size = view_container.size;

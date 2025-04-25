@@ -1,9 +1,24 @@
-[gd_resource type="Theme" load_steps=17 format=3 uid="uid://0y4va3gywhgo"]
+[gd_resource type="Theme" load_steps=18 format=3 uid="uid://0y4va3gywhgo"]
 
 [ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="1_07w4d"]
 [ext_resource type="FontFile" uid="uid://bu2il8aandv8j" path="res://Fonts/JetBrainsMono-Light.ttf" id="1_exhwa"]
 [ext_resource type="Texture2D" uid="uid://o8iagxcqf7vh" path="res://Media/Icons/toggle-circle-right-svgrepo-com.svg" id="1_q2jrd"]
 [ext_resource type="Texture2D" uid="uid://cqod3awwewv6g" path="res://Media/Icons/toggle-circle-left-svgrepo-com.svg" id="2_exhwa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q1nw8"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_exhwa"]
 
@@ -18,10 +33,10 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 0, 0, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exhwa"]
 content_margin_left = 16.0
@@ -29,15 +44,16 @@ content_margin_top = 16.0
 content_margin_right = 16.0
 content_margin_bottom = 16.0
 bg_color = Color(0, 0, 0, 1)
+draw_center = false
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 0, 0, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_huufh"]
 content_margin_left = 16.0
@@ -50,10 +66,10 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.70999, 1.1792e-06, 1.92523e-07, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5s7e5"]
 
@@ -144,6 +160,8 @@ corner_radius_bottom_left = 16
 [resource]
 default_font = ExtResource("1_07w4d")
 default_font_size = 24
+CPanel/base_type = &"PanelContainer"
+CPanel/styles/panel = SubResource("StyleBoxFlat_q1nw8")
 CheckButton/colors/font_color = Color(1, 1, 1, 1)
 CheckButton/constants/icon_max_width = 32
 CheckButton/font_sizes/font_size = 24
@@ -203,6 +221,7 @@ SecondaryButton/colors/icon_focus_color = Color(1, 1, 1, 1)
 SecondaryButton/colors/icon_hover_color = Color(1, 1, 1, 1)
 SecondaryButton/colors/icon_normal_color = Color(1, 1, 1, 1)
 SecondaryButton/colors/icon_pressed_color = Color(1, 1, 1, 1)
+SecondaryButton/constants/icon_max_width = 24
 SecondaryButton/font_sizes/font_size = 16
 SecondaryButton/styles/focus = SubResource("StyleBoxEmpty_tfxqj")
 SecondaryButton/styles/hover = SubResource("StyleBoxFlat_7eflh")

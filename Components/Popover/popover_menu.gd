@@ -6,6 +6,7 @@ class_name PopoverMenu
 
 var tween_duration = 0.15;
 var menu_contents: PackedScene;
+var subsection_keys: Array;
 
 func _ready():
 	position.x = get_parent().size.x + 2;
@@ -27,6 +28,9 @@ func _process(_delta):
 
 func set_title(title: String):
 	$ProgramContainer/VBoxContainer/Header/Label.text = title;
+
+func set_subsection(keys: Array):
+	subsection_keys = keys;
 
 func _t_open_menu():
 	await create_tween().tween_property(self, "position", Vector2.ZERO, tween_duration).finished;

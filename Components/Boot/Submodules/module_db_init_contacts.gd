@@ -16,6 +16,7 @@ func setup(bootstrap: Node):
 				id varchar(255) NOT NULL,
 				name_given varchar(255) NOT NULL DEFAULT 'John',
 				name_family varchar(255) NOT NULL DEFAULT 'Doe',
+				created_at varchar(255),
 				img_avatar blob,
 				PRIMARY KEY (id)
 			)

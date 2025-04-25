@@ -17,10 +17,12 @@ static func _file_data_to_image(file_data: PackedByteArray) -> Image:
 	match magic_sample:
 		MAGIC_JPG, MAGIC_JPEG:
 			img.load_jpg_from_buffer(file_data);
+			scale_img_to_fit_bounds(img, 1024, 1024);
 			var temp_buffer = img.save_png_to_buffer();
 			img.load_png_from_buffer(temp_buffer);
 		MAGIC_PNG:
 			img.load_png_from_buffer(file_data);
+			scale_img_to_fit_bounds(img, 1024, 1024);
 
 	if img.get_data().size() == 0:
 		push_error("File is not an image.");
@@ -52,3 +54,48 @@ static func _file_data_to_image(file_data: PackedByteArray) -> Image:
 
 static func pack_img_data(img: Image) -> PackedByteArray:
 	return PackedByteArray([img.get_format()]) + img.get_data();
+
+static func scale_img_to_fit_bounds(img: Image, max_width: int, max_height: int):
+	var img_size = img.get_size();
+
+	while (img_size.x > max_width || img_size.y > max_height):
+		img_size *= 0.5;
+
+	img.resize(img_size.x, img_size.y);
+
+static func string_to_hsl_color(input: String, saturation: float, lightness: float) -> Color:
+	var byte_buffer = input.to_utf8_buffer();
+	while (byte_buffer.size() % 4) != 0:
+		byte_buffer.append(0);
+
+	var to_int = Array(byte_buffer.to_int32_array());
+	var hashed = to_int.reduce(func(accum, number): return accum + number, 0);
+
+	var h = (hashed % 360) / 360.0;
+	var resulting = Color.from_hsv(h, saturation / 100, lightness / 100);
+	return resulting;
+
+static func get_default_avatar(contact: SQLContactsUtils.Contact, size: AvatarSize) -> ColorRect:
+	var panel = ColorRect.new();
+	var label = Label.new();
+	var bg_col = string_to_hsl_color(contact.get_name(), 40, 40);
+
+	panel.color = bg_col;
+
+	label.text = str(contact.name_given[0], contact.name_family[0]);
+	panel.add_child(label);
+
+	label.set_anchors_preset(Control.PRESET_FULL_RECT);
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER;
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER;
+
+	label.label_settings = LabelSettings.new();
+
+	match size:
+		AvatarSize.SMALL: label.label_settings.font_size = 24;
+		AvatarSize.MEDIUM: label.label_settings.font_size = 32;
+		AvatarSize.LARGE: label.label_settings.font_size = 64;
+
+	return panel;
+
+enum AvatarSize {SMALL, MEDIUM, LARGE}

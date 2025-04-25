@@ -22,43 +22,34 @@ script/source = "extends PanelContainer
 var name_label: Label;
 var edit_btn: Button;
 var avatar_panel: Panel;
+var edit_key: String;
 
-func populate(contact: Dictionary):
+func populate(contact: SQLContactsUtils.Contact):
 	name_label = $MarginContainer/HBoxContainer/Label;
 	edit_btn = $MarginContainer/HBoxContainer/Button;
 	avatar_panel = $MarginContainer/HBoxContainer/Panel;
 	
-	name_label.text = str(contact.name_given, ' ', contact.name_family);
+	name_label.text = contact.get_name();
+	edit_key = str('nav-view-contact/', contact.id);
 	
 	avatar_panel.get_child(-1).visible = false;
 	if contact.img_avatar == null:
 		# Construct fake avatar
 		avatar_panel.get_child(-1).visible = true;
-		avatar_panel.get_child(-1).color = string_to_hsl_color(name_label.text, 40, 40);
+		avatar_panel.get_child(-1).color = ImageUtils.string_to_hsl_color(name_label.text, 40, 40);
 		avatar_panel.get_child(-1).get_child(0).text = str(contact.name_given[0], contact.name_family[0]);
 		pass;
 	else:
 		# Load image into texture
-		var format = (contact.img_avatar as PackedByteArray)[0];
-		var img_data = (contact.img_avatar as PackedByteArray).slice(1);
-		
-		var img := Image.create_from_data(256, 256, false, format, img_data);
-		avatar_panel.get_child(0).texture = ImageTexture.create_from_image(img);
+		avatar_panel.get_child(0).texture = ImageTexture.create_from_image(contact.get_avatar());
 		pass;
 	
 	pass;
 
-func string_to_hsl_color(input: String, saturation: float, lightness: float) -> Color:
-	var byte_buffer = input.to_utf8_buffer();
-	while (byte_buffer.size() % 4) != 0:
-		byte_buffer.append(0);
-	
-	var to_int = Array(byte_buffer.to_int32_array());
-	var hash = to_int.reduce(func(accum, number): return accum + number, 0);
-	
-	var h = (hash % 360) / 360.0;
-	var resulting = Color.from_hsv(h, saturation / 100, lightness / 100);
-	return resulting;
+func _on_edit():
+	var view_manager = get_tree().get_first_node_in_group(\"$VIEW_MANAGER\");
+	view_manager.show_popover(\"Contact Details\", edit_key);
+	pass;
 "
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5s7e5"]
@@ -81,6 +72,8 @@ font_size = 20
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3t4vj"]
 
 [node name="ContactListItem" type="PanelContainer"]
+offset_right = 189.0
+offset_bottom = 76.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_8fpwb")
 script = SubResource("GDScript_3t4vj")
 
@@ -160,3 +153,5 @@ icon = ExtResource("3_707dx")
 layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3t4vj")
 flat = true
+
+[connection signal="pressed" from="edit_btn" to="." method="_on_edit"]
