@@ -1,25 +1,52 @@
-[gd_scene load_steps=3 format=3 uid="uid://c35r7vcdccbqy"]
+[gd_scene load_steps=16 format=3 uid="uid://c35r7vcdccbqy"]
 
-[sub_resource type="GDScript" id="GDScript_0u376"]
-resource_name = "asdasd"
-script/source = "extends Panel
+[ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_awqei"]
+[ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="1_sc0ip"]
+[ext_resource type="FontFile" uid="uid://bu2il8aandv8j" path="res://Fonts/JetBrainsMono-Light.ttf" id="2_awqei"]
+[ext_resource type="Script" uid="uid://b8bb47u1emurl" path="res://Components/Views/Contacts/EditForm/edit_contact.gd" id="2_ksu2n"]
+[ext_resource type="Texture2D" uid="uid://b5f4wehxfbxxd" path="res://Media/Icons/image-svgrepo-com.svg" id="3_ksu2n"]
+[ext_resource type="Texture2D" uid="uid://dptco6a2j2txr" path="res://Media/Icons/arrow-turn-left-down-svgrepo-com.svg" id="4_5n72n"]
+[ext_resource type="Texture2D" uid="uid://ca4bn843a7636" path="res://Media/Icons/bomb-svgrepo-com.svg" id="7_5n72n"]
 
-## FUCKING REMOVE THIS SCRIPT, ASSHOLE
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_53klh"]
 
-var popover_parent: PopoverMenu;
+[sub_resource type="LabelSettings" id="LabelSettings_gf8j6"]
+font = ExtResource("1_sc0ip")
+font_size = 24
 
-func _ready():
-	var subsection_key = popover_parent.subsection_keys[0];
-	var contact = SQL.contact_utils.get_contact_by_id(subsection_key);
-	if contact == null:
-		return;
-	
-	$Label.text = contact.get_name();
-	pass;
-"
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2hgu"]
+bg_color = Color(0.192914, 0.192914, 0.192914, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
-[sub_resource type="LabelSettings" id="LabelSettings_mbimq"]
-font_size = 32
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3gvhx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t2o4y"]
+draw_center = false
+border_width_top = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bv3u8"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_u3m0e"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xmktx"]
+font_color = Color(0.92549, 0, 0.00392157, 1)
 
 [node name="EditContact" type="Panel"]
 anchors_preset = 15
@@ -29,16 +56,255 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = SubResource("GDScript_0u376")
+theme = ExtResource("1_awqei")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_53klh")
+script = ExtResource("2_ksu2n")
 
-[node name="Label" type="Label" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "EDIT CONTACT"
-label_settings = SubResource("LabelSettings_mbimq")
-horizontal_alignment = 1
-vertical_alignment = 1
+theme_override_constants/separation = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Contact Avatar"
+label_settings = SubResource("LabelSettings_gf8j6")
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(13, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.511654, 0.511654, 0.511654, 1)
+theme_override_fonts/font = ExtResource("2_awqei")
+theme_override_font_sizes/font_size = 16
+text = "> Upload an image from your device to act as an avatar for your contact."
+autowrap_mode = 3
+
+[node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(13, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.511654, 0.511654, 0.511654, 1)
+theme_override_fonts/font = ExtResource("2_awqei")
+theme_override_font_sizes/font_size = 16
+text = "[ .png, .jpg, .JPEG ]"
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer"]
+clip_children = 2
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u2hgu")
+
+[node name="placeholder" type="TextureRect" parent="VBoxContainer/HBoxContainer/Panel"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_ksu2n")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="avatar_upload" type="Button" parent="VBoxContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3gvhx")
+flat = true
+
+[node name="img_rotate" type="Button" parent="VBoxContainer/HBoxContainer/Panel"]
+z_index = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+offset_left = -24.0
+offset_top = -20.0
+offset_right = 24.0
+offset_bottom = 28.0
+pivot_offset = Vector2(32, 32)
+theme_override_colors/icon_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0.996078, 1, 0, 1)
+icon = ExtResource("4_5n72n")
+flat = true
+expand_icon = true
+
+[node name="img_remove" type="Button" parent="VBoxContainer/HBoxContainer/Panel"]
+z_index = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_vertical = 0
+pivot_offset = Vector2(32, 32)
+theme_override_colors/icon_hover_color = Color(1, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(1, 0, 0, 1)
+icon = ExtResource("7_5n72n")
+flat = true
+expand_icon = true
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+theme_override_styles/separator = SubResource("StyleBoxFlat_t2o4y")
+
+[node name="GivenName" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bv3u8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/GivenName"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/GivenName/VBoxContainer"]
+layout_mode = 2
+
+[node name="Required" type="Label" parent="VBoxContainer/GivenName/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "*"
+
+[node name="Label" type="Label" parent="VBoxContainer/GivenName/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Given Name"
+label_settings = SubResource("LabelSettings_u3m0e")
+
+[node name="GivenNameField" type="LineEdit" parent="VBoxContainer/GivenName/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Example"
+clear_button_enabled = true
+flat = true
+select_all_on_focus = true
+caret_blink = true
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer/GivenName/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Given Name was invalid"
+label_settings = SubResource("LabelSettings_xmktx")
+
+[node name="FamilyName" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bv3u8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/FamilyName"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/FamilyName/VBoxContainer"]
+layout_mode = 2
+
+[node name="Required" type="Label" parent="VBoxContainer/FamilyName/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "*"
+
+[node name="Label" type="Label" parent="VBoxContainer/FamilyName/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Family Name"
+label_settings = SubResource("LabelSettings_u3m0e")
+
+[node name="FamilyNameField" type="LineEdit" parent="VBoxContainer/FamilyName/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Exampleson"
+clear_button_enabled = true
+flat = true
+select_all_on_focus = true
+caret_blink = true
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer/FamilyName/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Given Name was invalid"
+label_settings = SubResource("LabelSettings_xmktx")
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.335116, 0.335116, 0.335116, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/paragraph_spacing = 0
+theme_override_font_sizes/font_size = 16
+text = "ID -> ctact_c27b0604"
+uppercase = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -54.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Buttons" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Submit" type="Button" parent="MarginContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PrimaryButton"
+text = "Submit"
+
+[node name="Cancel" type="Button" parent="MarginContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SecondaryButton"
+text = "Cancel"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Open a File"
+popup_window = true
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png,*.jpg,*.jpeg;Image Files;image/png,image/jpeg")
+use_native_dialog = true
+
+[node name="InputBlocker" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -43,6 +43,12 @@ func set_explode_action(action: Callable):
 func set_fuse_length(length: float):
 	fuse_time = length;
 
+func defuse():
+	defused = true;
+	exploded = false;
+	fuse_lit = false;
+	_tween_out();
+
 func _update_instructions():
 	instructions.text = str('Keep your finger on the bomb for ' + str(roundi(fuse_time)) + ' seconds.');
 
@@ -102,6 +108,5 @@ func _on_bomb_button_down() -> void:
 func _on_background_gui_input(event:InputEvent) -> void:
 	if event is InputEventMouseButton and not defused:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-			_tween_out();
-			defused = true;
+			defuse();
 	pass # Replace with function body.

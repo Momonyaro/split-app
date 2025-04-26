@@ -19,6 +19,11 @@ func _ready():
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		var open_prompts = get_tree().get_nodes_in_group("$PROMPT");
+		if open_prompts.size() > 0:
+			open_prompts[0].defuse();
+			return;
+
 		if popover_stack.size() > 0:
 			popover_stack[-1]._t_close_menu();
 		else:
@@ -46,7 +51,7 @@ func change_view(view_key: String):
 func show_popover(title: String, view_key: String):
 	var split_key = _convert_string(view_key);
 	var first_key = split_key.pop_front();
-	if views.has(first_key) && popover_stack.is_empty():
+	if views.has(first_key):
 		var packed_view: PackedScene = views[first_key];
 		var popover_instance = popover_prefab.instantiate() as PopoverMenu;
 		popover_instance.menu_contents = packed_view;

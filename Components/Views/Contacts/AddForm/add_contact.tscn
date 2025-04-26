@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cpl4oakc4r2l2"]
+[gd_scene load_steps=16 format=3 uid="uid://cpl4oakc4r2l2"]
 
 [ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_1wcul"]
 [ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="1_r0bay"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://okhy45kfai5f" path="res://Components/Views/Contacts/AddForm/add_contact_form.gd" id="2_4j8na"]
 [ext_resource type="FontFile" uid="uid://bu2il8aandv8j" path="res://Fonts/JetBrainsMono-Light.ttf" id="4_mn737"]
 [ext_resource type="Texture2D" uid="uid://dptco6a2j2txr" path="res://Media/Icons/arrow-turn-left-down-svgrepo-com.svg" id="6_q4cc7"]
+[ext_resource type="Texture2D" uid="uid://ca4bn843a7636" path="res://Media/Icons/bomb-svgrepo-com.svg" id="7_7t842"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a0aip"]
 
@@ -101,7 +102,7 @@ size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.511654, 0.511654, 0.511654, 1)
 theme_override_fonts/font = ExtResource("4_mn737")
 theme_override_font_sizes/font_size = 16
-text = "max size: 5MB, (.png, .jpg, .JPEG)"
+text = "[ .png, .jpg, .JPEG ]"
 vertical_alignment = 2
 autowrap_mode = 3
 
@@ -153,7 +154,28 @@ offset_top = -20.0
 offset_right = 24.0
 offset_bottom = 28.0
 pivot_offset = Vector2(32, 32)
+theme_override_colors/icon_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/icon_pressed_color = Color(1, 1, 0, 1)
 icon = ExtResource("6_q4cc7")
+flat = true
+expand_icon = true
+
+[node name="img_remove" type="Button" parent="VBoxContainer/HBoxContainer/Panel"]
+z_index = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_vertical = 0
+pivot_offset = Vector2(32, 32)
+theme_override_colors/icon_hover_color = Color(1, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(1, 0, 0, 1)
+icon = ExtResource("7_7t842")
 flat = true
 expand_icon = true
 

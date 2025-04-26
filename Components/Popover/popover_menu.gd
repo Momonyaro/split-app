@@ -4,7 +4,7 @@ class_name PopoverMenu
 @onready var content_parent = $ProgramContainer/VBoxContainer/ContentContainer;
 @onready var back_btn = $ProgramContainer/VBoxContainer/Header/Button;
 
-var tween_duration = 0.15;
+var tween_duration = 0.1;
 var menu_contents: PackedScene;
 var subsection_keys: Array;
 

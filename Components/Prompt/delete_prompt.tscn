@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhv132hmgk21"]
+[gd_scene load_steps=6 format=3 uid="uid://dhv132hmgk21"]
 
 [ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_wsv2p"]
 [ext_resource type="Texture2D" uid="uid://ca4bn843a7636" path="res://Media/Icons/bomb-svgrepo-com.svg" id="2_c6jvw"]
@@ -20,7 +20,9 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[node name="DeletePrompt" type="Control"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c6jvw"]
+
+[node name="DeletePrompt" type="Control" groups=["$PROMPT"]]
 z_index = 10
 layout_mode = 3
 anchors_preset = 15
@@ -90,6 +92,7 @@ autowrap_mode = 2
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/icon_max_width = 128
+theme_override_styles/focus = SubResource("StyleBoxEmpty_c6jvw")
 icon = ExtResource("2_c6jvw")
 flat = true
 icon_alignment = 1

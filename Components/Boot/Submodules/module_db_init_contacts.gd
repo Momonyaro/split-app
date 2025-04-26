@@ -14,6 +14,7 @@ func setup(bootstrap: Node):
 		SQL.query("
 			CREATE TABLE contacts (
 				id varchar(255) NOT NULL,
+				deleted boolean NOT NULL DEFAULT false,
 				name_given varchar(255) NOT NULL DEFAULT 'John',
 				name_family varchar(255) NOT NULL DEFAULT 'Doe',
 				created_at varchar(255),

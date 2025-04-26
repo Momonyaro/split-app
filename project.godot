@@ -42,6 +42,7 @@ enabled=PackedStringArray("res://addons/godot-sqlite/plugin.cfg")
 [global_group]
 
 $VIEW_MANAGER=""
+$PROMPT=""
 
 [rendering]
 

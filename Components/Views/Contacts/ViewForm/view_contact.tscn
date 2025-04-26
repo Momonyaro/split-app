@@ -94,13 +94,13 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Cancel" type="Button" parent="VBoxContainer/Buttons"]
+[node name="Edit" type="Button" parent="VBoxContainer/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"SecondaryButton"
 text = "Edit"
 
-[node name="Submit" type="Button" parent="VBoxContainer/Buttons"]
+[node name="Delete" type="Button" parent="VBoxContainer/Buttons"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_type_variation = &"DeleteButton"

@@ -77,24 +77,39 @@ static func string_to_hsl_color(input: String, saturation: float, lightness: flo
 
 static func get_default_avatar(contact: SQLContactsUtils.Contact, size: AvatarSize) -> ColorRect:
 	var panel = ColorRect.new();
-	var label = Label.new();
 	var bg_col = string_to_hsl_color(contact.get_name(), 40, 40);
-
 	panel.color = bg_col;
 
-	label.text = str(contact.name_given[0], contact.name_family[0]);
-	panel.add_child(label);
+	if contact.deleted:
+		var margin_container = MarginContainer.new();
+		panel.add_child(margin_container);
+		margin_container.set_anchors_preset(Control.PRESET_FULL_RECT);
+		margin_container.add_theme_constant_override("margin_left", 16);
+		margin_container.add_theme_constant_override("margin_right", 16);
+		margin_container.add_theme_constant_override("margin_top", 16);
+		margin_container.add_theme_constant_override("margin_bottom", 16);
 
-	label.set_anchors_preset(Control.PRESET_FULL_RECT);
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER;
-	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER;
+		var texture_rect = TextureRect.new();
+		texture_rect.texture = ResourceLoader.load("res://Media/Icons/ghost-svgrepo-com.svg");
+		margin_container.add_child(texture_rect);
 
-	label.label_settings = LabelSettings.new();
+		texture_rect.set_anchors_preset(Control.PRESET_FULL_RECT);
+		texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE;
+	else:
+		var label = Label.new();
+		label.text = str(contact.name_given[0], contact.name_family[0]);
+		panel.add_child(label);
 
-	match size:
-		AvatarSize.SMALL: label.label_settings.font_size = 24;
-		AvatarSize.MEDIUM: label.label_settings.font_size = 32;
-		AvatarSize.LARGE: label.label_settings.font_size = 64;
+		label.set_anchors_preset(Control.PRESET_FULL_RECT);
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER;
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER;
+
+		label.label_settings = LabelSettings.new();
+
+		match size:
+			AvatarSize.SMALL: label.label_settings.font_size = 24;
+			AvatarSize.MEDIUM: label.label_settings.font_size = 32;
+			AvatarSize.LARGE: label.label_settings.font_size = 64;
 
 	return panel;
 

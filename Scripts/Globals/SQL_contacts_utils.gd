@@ -25,6 +25,7 @@ func get_contact_by_id(id: String) -> Contact:
 func get_contacts() -> Array:
 	SQL.query("
 		SELECT * FROM contacts
+		WHERE deleted = false
 	");
 
 	var result = SQL.get_query_result();
@@ -48,8 +49,28 @@ func add_contact(contact: Dictionary) -> bool:
 		contacts_changed.emit(contact.id);
 	return success;
 
+func update_contact(contact: Dictionary) -> bool:
+	var success = SQL.query_with_bindings("
+		UPDATE contacts SET name_family = ?, name_given = ?, img_avatar = ?
+		WHERE id = ?
+	", [contact.name_family, contact.name_given, contact.img_avatar, contact.id]);
+
+	if success:
+		contacts_changed.emit(contact.id);
+	return success;
+
+func delete_contact(id: String) -> bool:
+	var success = SQL.query_with_bindings("
+		UPDATE contacts SET deleted = true, name_given = 'Deleted', name_family = 'Contact' WHERE id = ?
+	", [id]);
+
+	if success:
+		contacts_changed.emit(id);
+	return success;
+
 class Contact:
 	var id: String;
+	var deleted: bool;
 	var name_family: String;
 	var name_given: String;
 	var created_at: String;
@@ -57,6 +78,7 @@ class Contact:
 
 	func _init(dict: Dictionary):
 		self.id = dict["id"];
+		self.deleted = dict.get("deleted", false);
 		self.name_family = dict["name_family"];
 		self.name_given = dict["name_given"];
 		self.created_at = dict["created_at"];

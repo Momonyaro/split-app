@@ -11,7 +11,6 @@ signal on_nav_changed(key: StringName);
 var current_section = default_section;
 
 func _ready() -> void:
-	await get_tree().create_timer(0.1).timeout;
 	draw_list();
 
 func draw_list():
