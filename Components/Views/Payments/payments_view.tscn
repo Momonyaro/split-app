@@ -1,18 +1,101 @@
-[gd_scene load_steps=2 format=3 uid="uid://uupiaapfnd5w"]
+[gd_scene load_steps=11 format=3 uid="uid://uupiaapfnd5w"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_mbimq"]
-font_size = 32
+[ext_resource type="Script" uid="uid://dli2o7c3w2wbf" path="res://Components/Views/Payments/payments_view.gd" id="1_75lo2"]
+[ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_rkh12"]
+[ext_resource type="Texture2D" uid="uid://uctrq5063hpa" path="res://Media/Icons/sort-svgrepo-com.svg" id="2_75lo2"]
+[ext_resource type="PackedScene" uid="uid://c8neghqtch1nh" path="res://Components/Views/Contacts/no_content_item.tscn" id="3_x05nx"]
+[ext_resource type="PackedScene" uid="uid://dxe747fd2frqo" path="res://Components/Buttons/floating_button.tscn" id="4_21a5e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fedc6"]
+
+[sub_resource type="Gradient" id="Gradient_tl64h"]
+offsets = PackedFloat32Array(0, 0.792651, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.889764, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tul34"]
+gradient = SubResource("Gradient_tl64h")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_434mp"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+texture = SubResource("GradientTexture2D_tul34")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g6kux"]
 
 [node name="PaymentsView" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_fedc6")
+script = ExtResource("1_75lo2")
 
-[node name="Label" type="Label" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "PAYMENTS"
-label_settings = SubResource("LabelSettings_mbimq")
-horizontal_alignment = 1
-vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="MenuButton" type="MenuButton" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_rkh12")
+theme_override_constants/h_separation = 8
+theme_override_constants/icon_max_width = 24
+text = "Sort"
+icon = ExtResource("2_75lo2")
+alignment = 0
+icon_alignment = 2
+item_count = 4
+popup/item_0/text = "Created (Latest)"
+popup/item_0/checkable = 2
+popup/item_0/id = 0
+popup/item_1/text = "Created (Oldest)"
+popup/item_1/checkable = 2
+popup/item_1/id = 1
+popup/item_2/text = "Alphabetical (A-Z)"
+popup/item_2/checkable = 2
+popup/item_2/id = 2
+popup/item_3/text = "Alphabetical (Z-A)"
+popup/item_3/checkable = 2
+popup/item_3/id = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+clip_children = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_434mp")
+horizontal_scroll_mode = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_g6kux")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NoContentItem" parent="VBoxContainer/ScrollContainer/PanelContainer/VBoxContainer" instance=ExtResource("3_x05nx")]
+layout_mode = 2
+
+[node name="PADDING" type="Control" parent="VBoxContainer/ScrollContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+
+[node name="FloatingButton" parent="." instance=ExtResource("4_21a5e")]
+layout_mode = 1
+offset_left = -96.0
+offset_top = -96.0

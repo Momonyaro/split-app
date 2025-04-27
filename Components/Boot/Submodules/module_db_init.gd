@@ -2,7 +2,7 @@ extends Node;
 class_name ModuleDBInit;
 
 func setup(bootstrap: Node):
-	bootstrap.log_message("> Running ModuleDBInit...");
+	bootstrap.log_message("> Running init for Data Store...");
 
 	if !FileAccess.file_exists(SQL.DATASTORE_PATH):
 		var file = FileAccess.open(SQL.DATASTORE_PATH, FileAccess.WRITE);

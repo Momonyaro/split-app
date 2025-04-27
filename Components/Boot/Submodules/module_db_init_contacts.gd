@@ -2,7 +2,7 @@ extends Node
 class_name ModuleDBInitContacts;
 
 func setup(bootstrap: Node):
-	bootstrap.log_message("> Running ModuleDBInitContacts...");
+	bootstrap.log_message("> Running init for Contacts...");
 
 	# Check if contacts table exists and if not, create it.
 	SQL.query("

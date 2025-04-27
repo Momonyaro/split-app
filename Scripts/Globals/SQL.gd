@@ -3,6 +3,7 @@ extends Node
 const DATASTORE_PATH = "user://datastore.sqlite";
 
 var contact_utils = SQLContactsUtils.new();
+var payment_utils = SQLPaymentUtils.new();
 
 var _sqlite = SQLite.new();
 

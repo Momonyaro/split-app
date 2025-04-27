@@ -1,0 +1,114 @@
+[gd_scene load_steps=6 format=3 uid="uid://bvt8hwqmm5ewx"]
+
+[ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_sq6m8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8fpwb"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="GDScript" id="GDScript_o1pck"]
+resource_name = "PaymentListItem"
+script/source = "extends PanelContainer
+
+var title_label: Label;
+var amount_label: Label;
+var created_label: Label;
+var participant_label: Label;
+
+var edit_key: String;
+
+func populate(payment: SQLPaymentUtils.Payment):
+	title_label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/PaymentTitle;
+	amount_label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/PaymentTitle2
+	created_label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Label;
+	participant_label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Label2;
+	
+	title_label.text = payment.title;
+	amount_label.text = str(\"%.2f\" % (payment.get_total_amount_cents() / 100.0), \" SEK\");
+	created_label.text = str(\"> Created: \", payment.created_at);
+	participant_label.text = str(\"0 Participants\");
+	edit_key = str('nav-view-payment/', payment.id);
+	
+	pass;
+
+func _on_edit():
+	var view_manager = get_tree().get_first_node_in_group(\"$VIEW_MANAGER\");
+	view_manager.show_popover(\"Payment Details\", edit_key);
+	pass;
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_bhhjj"]
+font_color = Color(0.414449, 0.414449, 0.414449, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3t4vj"]
+
+[node name="PaymentListItem" type="PanelContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 76.0
+grow_horizontal = 2
+theme = ExtResource("1_sq6m8")
+theme_override_styles/panel = SubResource("StyleBoxFlat_8fpwb")
+script = SubResource("GDScript_o1pck")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PaymentTitle" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "[ PAYMENT TITLE ]"
+autowrap_mode = 3
+
+[node name="PaymentTitle2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(83.355, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 1
+text = "[ AMOUNT ]"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "[ CREATED AT: DATE ]"
+label_settings = SubResource("LabelSettings_bhhjj")
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "[ X PARTICIPANTS ]"
+label_settings = SubResource("LabelSettings_bhhjj")
+
+[node name="edit_btn" type="Button" parent="."]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3t4vj")
+flat = true
+
+[connection signal="pressed" from="edit_btn" to="." method="_on_edit"]

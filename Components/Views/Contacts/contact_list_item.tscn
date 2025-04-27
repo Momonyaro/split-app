@@ -1,6 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://c55cciwn63htn"]
 
 [ext_resource type="Texture2D" uid="uid://bwnh85uo7uhcj" path="res://icon.svg" id="1_3t4vj"]
+[ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_v0265"]
 [ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="2_v0265"]
 [ext_resource type="Texture2D" uid="uid://bo7q40wtibffu" path="res://Media/Icons/pencil-svgrepo-com.svg" id="3_707dx"]
 
@@ -63,26 +64,25 @@ corner_radius_bottom_left = 8
 font = ExtResource("2_v0265")
 font_size = 24
 
-[sub_resource type="LabelSettings" id="LabelSettings_tul34"]
-font = ExtResource("2_v0265")
-font_size = 20
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5s7e5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3t4vj"]
 
 [node name="ContactListItem" type="PanelContainer"]
-offset_right = 189.0
+anchors_preset = 10
+anchor_right = 1.0
 offset_bottom = 76.0
+grow_horizontal = 2
+theme = ExtResource("1_v0265")
 theme_override_styles/panel = SubResource("StyleBoxFlat_8fpwb")
 script = SubResource("GDScript_3t4vj")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -134,7 +134,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "John Doe"
-label_settings = SubResource("LabelSettings_tul34")
 text_overrun_behavior = 3
 
 [node name="Button" type="Button" parent="MarginContainer/HBoxContainer"]

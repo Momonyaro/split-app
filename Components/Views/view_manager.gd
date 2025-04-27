@@ -79,7 +79,7 @@ func _tween_view():
 	view_container.get_child(0).size = view_container.size;
 	var origo = Vector2(0, 32);
 	await create_tween().tween_method(func(t):
-		view_container.get_child(0).position = origo + Vector2(0, 24 * (1.0 - t));
+		view_container.get_child(0).position = origo + Vector2(0, 16 * (1.0 - t));
 		view_container.get_child(0).modulate = Color(1, 1, 1, t);
 	, 0., 1., 0.2).finished;
 	view_container.get_child(0).position = origo + Vector2(0, 0);

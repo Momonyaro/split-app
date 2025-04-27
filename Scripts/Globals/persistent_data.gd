@@ -2,10 +2,12 @@ extends Node
 
 const SETTING_VIBRATE = "setting.vibrate";
 const CONTACTS_SORT = "contacts.sort";
+const PAYMENTS_SORT = "payments.sort";
 
 var _data = {
 	SETTING_VIBRATE: true,
-	CONTACTS_SORT: 0
+	CONTACTS_SORT: 0,
+	PAYMENTS_SORT: 0
 };
 
 func write_persistent(key: String, value: Variant):

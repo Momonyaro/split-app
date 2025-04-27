@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c3qjjutwhpnl5"]
+[gd_scene load_steps=17 format=3 uid="uid://c3qjjutwhpnl5"]
 
 [ext_resource type="Script" uid="uid://bxm3w7elsqlir" path="res://Components/Boot/bootstrap.gd" id="1_hc42q"]
 [ext_resource type="Texture2D" uid="uid://gmpl1c3c1xbe" path="res://Media/Logo/logo_black.svg" id="1_tibdk"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://bpvtvq6so1llc" path="res://Components/Boot/Submodules/module_db_init.gd" id="3_2pso4"]
 [ext_resource type="Script" uid="uid://c7e0j2lcs7hjf" path="res://Components/Boot/Submodules/module_joke.gd" id="4_fh8pd"]
 [ext_resource type="Script" uid="uid://cqo6lgja537o5" path="res://Components/Boot/Submodules/module_db_init_contacts.gd" id="5_anv6a"]
+[ext_resource type="Script" uid="uid://by6qxmlpicmgg" path="res://Components/Boot/Submodules/module_db_init_payments.gd" id="5_ikye1"]
+[ext_resource type="Script" uid="uid://co3bw3207lxag" path="res://Components/Boot/Submodules/module_db_init_payment_line_items.gd" id="6_45psv"]
 
 [sub_resource type="Gradient" id="Gradient_dti5a"]
 offsets = PackedFloat32Array(0, 0.639225, 1)
@@ -66,7 +68,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hc42q")
-version = "389cfbbf728ec56a7ce2acba2713c15c7cbab523
+version = "8021346c4386b766e378607595f7ad5765615fa1
 "
 target_scene = ExtResource("2_8qnnm")
 
@@ -77,6 +79,12 @@ script = ExtResource("3_2pso4")
 
 [node name="DB_CONTACTS_INIT" type="Node" parent="Modules"]
 script = ExtResource("5_anv6a")
+
+[node name="DB_PAYMENTS_INIT" type="Node" parent="Modules"]
+script = ExtResource("5_ikye1")
+
+[node name="DB_PAYMENT_LINES_INIT" type="Node" parent="Modules"]
+script = ExtResource("6_45psv")
 
 [node name="JOKE" type="Node" parent="Modules"]
 script = ExtResource("4_fh8pd")
