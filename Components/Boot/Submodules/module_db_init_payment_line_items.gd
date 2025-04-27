@@ -33,7 +33,7 @@ func setup(bootstrap: Node):
 				fixed_amount_percentage integer NOT NULL,
 				PRIMARY KEY (id),
 				FOREIGN KEY (line_item_id) REFERENCES payment_line_items(id),
-				FOREIGN KEY (participant_id) REFERENCES participants(id)
+				FOREIGN KEY (participant_id) REFERENCES payment_participants(id)
 			)
 		");
 

@@ -23,8 +23,10 @@ var created_label: Label;
 var participant_label: Label;
 
 var edit_key: String;
+var payment_item: SQLPaymentUtils.Payment;
 
 func populate(payment: SQLPaymentUtils.Payment):
+	payment_item = payment;
 	title_label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/PaymentTitle;
 	amount_label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/PaymentTitle2
 	created_label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Label;
@@ -33,7 +35,7 @@ func populate(payment: SQLPaymentUtils.Payment):
 	title_label.text = payment.title;
 	amount_label.text = str(\"%.2f\" % (payment.get_total_amount_cents() / 100.0), \" SEK\");
 	created_label.text = str(\"> Created: \", payment.created_at);
-	participant_label.text = str(\"0 Participants\");
+	participant_label.text = str(payment.participants.size(), \" Participants\");
 	edit_key = str('nav-view-payment/', payment.id);
 	
 	pass;

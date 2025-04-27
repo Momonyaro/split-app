@@ -2,35 +2,41 @@ class_name SQLPaymentUtils;
 
 signal payments_modified(payment_id: String);
 
-func get_payment(payment_id: String) -> Payment:
-	var query = "SELECT * FROM payments WHERE id = ?";
-	SQL.query_with_bindings(query, [payment_id]);
-	var result = SQL.get_query_result();
-	if result.size() == 0:
+func get_payment(payment_id: String) -> Payment: # Not scalable, but I'm no SQL wizard...
+	SQL.query_with_bindings("SELECT * FROM payments WHERE id = ?", [payment_id]);
+	var payment_result = SQL.get_query_result();
+	if payment_result.size() == 0:
 		return null;
-	return Payment.new(result[0]);
+
+	SQL.query_with_bindings("SELECT * FROM payment_participants WHERE payment_id = ?", [payment_id]);
+	var participants = SQL.get_query_result();
+
+	SQL.query_with_bindings("SELECT * FROM payment_line_items WHERE payment_id = ?", [payment_id]);
+	var line_items = SQL.get_query_result();
+
+	var payment = Payment.new(payment_result[0]);
+	payment.participants = participants.map(func (x): return PaymentParticipant.new(x));
+	payment.line_items = line_items.map(func (x): return LineItem.new(x));
+	for line_item in line_items:
+		SQL.query_with_bindings("SELECT * FROM payment_line_item_participants WHERE line_item_id = ?", [line_item.id]);
+		var line_item_participants = SQL.get_query_result();
+		line_item.participants = line_item_participants.map(func (x): return LineItemParticipant.new(x));
+
+	return payment;
 
 func get_payments() -> Array:
 	SQL.query("
-		SELECT
-		payments.*,
-		JSON_GROUP_ARRAY(
-			JSON_OBJECT(
-				'id', line_items.id,
-				'payment_id', line_items.payment_id,
-				'title', line_items.title,
-				'amount_cents', line_items.amount_cents
-			)
-		) as line_items_array
-		FROM payments
-		LEFT JOIN payment_line_items as line_items ON payments.id = line_items.payment_id
-		WHERE payments.deleted = false and line_items.deleted = false
+		SELECT id FROM payments
+		WHERE deleted = false;
 	");
-	var result = SQL.get_query_result();
-	var payments = [];
-	for row in result:
-		payments.append(Payment.new(row));
-	return payments;
+	var payment_ids = SQL.get_query_result();
+
+	var result = [];
+	for id in payment_ids:
+		var payment = get_payment(id.id);
+		if payment != null:
+			result.append(payment);
+	return result;
 
 class Payment:
 	var id: String;
@@ -39,6 +45,7 @@ class Payment:
 	var created_at: String;
 
 	var line_items: Array;
+	var participants: Array;
 
 	func _init(dict: Dictionary):
 		self.id = dict["id"];
@@ -56,14 +63,38 @@ class Payment:
 			total += item.amount_cents;
 		return total;
 
-class LineItem:
+class PaymentParticipant:
 	var id: String;
 	var payment_id: String;
-	var title: String;
-	var amount_cents: int;
+	var contact_id: String;
 
 	func _init(dict: Dictionary):
 		self.id = dict["id"];
 		self.payment_id = dict["payment_id"];
+		self.contact_id = dict["contact_id"];
+
+class LineItem:
+	var id: String;
+	var title: String;
+	var amount_cents: int;
+
+	var participants: Array;
+
+	func _init(dict: Dictionary):
+		self.id = dict["id"];
 		self.title = dict["title"];
 		self.amount_cents = dict["amount_cents"];
+
+class LineItemParticipant:
+	var id: String;
+	var line_item_id: String;
+	var participant_id: String;
+	var fixed_amount_cents: int;
+	var fixed_amount_percentage: int;
+
+	func _init(dict: Dictionary):
+		self.id = dict["id"];
+		self.line_item_id = dict["line_item_id"];
+		self.participant_id = dict["participant_id"];
+		self.fixed_amount_cents = dict["fixed_amount_cents"];
+		self.fixed_amount_percentage = dict["fixed_amount_percentage"];

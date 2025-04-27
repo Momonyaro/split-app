@@ -62,7 +62,7 @@ func _on_sorting_menu_id_pressed(id: int):
 	if current_index != -1:
 		popup.set_item_checked(current_index, true);
 
-	PersistentData.write_persistent(PersistentData.CONTACTS_SORT, id);
+	PersistentData.write_persistent(PersistentData.PAYMENTS_SORT, id);
 	populate();
 
 func _create_padding():
