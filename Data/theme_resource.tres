@@ -74,10 +74,10 @@ corner_radius_bottom_left = 16
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5s7e5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5s7e5"]
-content_margin_left = 16.0
-content_margin_top = 8.0
-content_margin_right = 16.0
-content_margin_bottom = 8.0
+content_margin_left = 24.0
+content_margin_top = 16.0
+content_margin_right = 24.0
+content_margin_bottom = 16.0
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
 border_width_top = 2
@@ -190,6 +190,7 @@ Label/fonts/font = ExtResource("1_07w4d")
 PopupMenu/colors/font_color = Color(1, 1, 1, 1)
 PopupMenu/colors/font_hover_color = Color(0.591518, 0.591518, 0.591518, 1)
 PopupMenu/constants/h_separation = 8
+PopupMenu/constants/icon_max_width = 24
 PopupMenu/constants/v_separation = 8
 PopupMenu/styles/hover = SubResource("StyleBoxEmpty_5s7e5")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_5s7e5")

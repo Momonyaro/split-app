@@ -5,9 +5,16 @@ extends Panel
 
 @onready var payments_list = $VBoxContainer/ScrollContainer/PanelContainer/VBoxContainer;
 @onready var sorting_menu: MenuButton = $VBoxContainer/MarginContainer/HBoxContainer/MenuButton;
+@onready var floating_button: FloatingButton = $FloatingButton;
 
 
 func _ready():
+	var view_manager = get_tree().get_first_node_in_group("$VIEW_MANAGER");
+
+	floating_button.pressed.connect(func():
+		view_manager.show_popover('Add Payment', 'nav-add-payment');
+	);
+
 	setup_sorting();
 	populate();
 

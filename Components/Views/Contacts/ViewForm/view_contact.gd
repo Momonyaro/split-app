@@ -38,7 +38,7 @@ func populate():
 	contact_name_label.text = contact.get_name();
 
 	var date = contact.get_created_at();
-	created_at_label.text = str(" > Created: ", date.year, "-", "%02d" % date.month, "-", "%02d" % date.day, " ", "%02d" % date.hour, ":", "%02d" % date.minute, ":", "%02d" % date.second);
+	created_at_label.text = str("Created -> ", date.year, "-", "%02d" % date.month, "-", "%02d" % date.day, " ", "%02d" % date.hour, ":", "%02d" % date.minute, ":", "%02d" % date.second);
 
 	var children = avatar_rect.get_parent().get_children();
 	for i in children.size():

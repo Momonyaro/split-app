@@ -85,6 +85,7 @@ text_overrun_behavior = 3
 modulate = Color(0.283384, 0.283384, 0.283384, 1)
 layout_mode = 2
 label_settings = SubResource("LabelSettings_5vhxq")
+uppercase = true
 
 [node name="Control2" type="Control" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 16)

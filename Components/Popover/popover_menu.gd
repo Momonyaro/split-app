@@ -18,7 +18,8 @@ func _ready():
 
 	if menu_contents != null:
 		var menu = menu_contents.instantiate();
-		menu.popover_parent = self;
+		if "popover_parent" in menu:
+			menu.popover_parent = self;
 		content_parent.add_child(menu);
 
 	await _t_open_menu();

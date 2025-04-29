@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bmlh44oq8boum"]
+[gd_scene load_steps=19 format=3 uid="uid://bmlh44oq8boum"]
 
 [ext_resource type="Texture2D" uid="uid://dunt0k3vmidiu" path="res://Media/Logo/logo_inline.svg" id="1_mapnv"]
 [ext_resource type="Script" uid="uid://fxj3w8v70uul" path="res://Components/Views/view_manager.gd" id="1_mbimq"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://d360dt3x43417" path="res://Components/Views/Settings/settings_view.tscn" id="6_klihh"]
 [ext_resource type="PackedScene" uid="uid://c35r7vcdccbqy" path="res://Components/Views/Contacts/EditForm/edit_contact.tscn" id="7_puade"]
 [ext_resource type="PackedScene" uid="uid://c1ut28cuaw3se" path="res://Components/Views/Contacts/ViewForm/view_contact.tscn" id="8_gg21r"]
+[ext_resource type="PackedScene" uid="uid://0qm6p750eqoo" path="res://Components/Views/Payments/AddForm/add_payment.tscn" id="9_p81yr"]
 
 [sub_resource type="Gradient" id="Gradient_dti5a"]
 offsets = PackedFloat32Array(0, 0.639225, 1)
@@ -68,6 +69,7 @@ grow_vertical = 2
 script = ExtResource("1_mbimq")
 views = Dictionary[String, PackedScene]({
 "nav-add-contact": ExtResource("5_o364r"),
+"nav-add-payment": ExtResource("9_p81yr"),
 "nav-contacts": ExtResource("3_2ca32"),
 "nav-edit-contact": ExtResource("7_puade"),
 "nav-home": ExtResource("4_hstka"),
