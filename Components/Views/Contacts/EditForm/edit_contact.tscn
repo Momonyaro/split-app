@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c35r7vcdccbqy"]
+[gd_scene load_steps=14 format=3 uid="uid://c35r7vcdccbqy"]
 
 [ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_awqei"]
 [ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="1_sc0ip"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b5f4wehxfbxxd" path="res://Media/Icons/image-svgrepo-com.svg" id="3_ksu2n"]
 [ext_resource type="Texture2D" uid="uid://dptco6a2j2txr" path="res://Media/Icons/arrow-turn-left-down-svgrepo-com.svg" id="4_5n72n"]
 [ext_resource type="Texture2D" uid="uid://ca4bn843a7636" path="res://Media/Icons/bomb-svgrepo-com.svg" id="7_5n72n"]
+[ext_resource type="PackedScene" uid="uid://hovqe2lynwk" path="res://Components/Input/text_field.tscn" id="8_53klh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_53klh"]
 
@@ -27,26 +28,6 @@ corner_radius_bottom_left = 16
 draw_center = false
 border_width_top = 2
 border_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bv3u8"]
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="LabelSettings" id="LabelSettings_u3m0e"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_xmktx"]
-font_color = Color(0.92549, 0, 0.00392157, 1)
 
 [node name="EditContact" type="Panel"]
 anchors_preset = 15
@@ -184,75 +165,14 @@ layout_mode = 2
 theme_override_constants/separation = 16
 theme_override_styles/separator = SubResource("StyleBoxFlat_t2o4y")
 
-[node name="GivenName" type="PanelContainer" parent="VBoxContainer"]
+[node name="NameField" parent="VBoxContainer" instance=ExtResource("8_53klh")]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bv3u8")
+title = "Given Name"
+placeholder = "Example"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/GivenName"]
+[node name="FamilyField" parent="VBoxContainer" instance=ExtResource("8_53klh")]
 layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/GivenName/VBoxContainer"]
-layout_mode = 2
-
-[node name="Required" type="Label" parent="VBoxContainer/GivenName/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 16
-text = "*"
-
-[node name="Label" type="Label" parent="VBoxContainer/GivenName/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Given Name"
-label_settings = SubResource("LabelSettings_u3m0e")
-
-[node name="GivenNameField" type="LineEdit" parent="VBoxContainer/GivenName/VBoxContainer"]
-layout_mode = 2
-placeholder_text = "Example"
-clear_button_enabled = true
-flat = true
-select_all_on_focus = true
-caret_blink = true
-
-[node name="ErrorLabel" type="Label" parent="VBoxContainer/GivenName/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "Given Name was invalid"
-label_settings = SubResource("LabelSettings_xmktx")
-
-[node name="FamilyName" type="PanelContainer" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bv3u8")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/FamilyName"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/FamilyName/VBoxContainer"]
-layout_mode = 2
-
-[node name="Required" type="Label" parent="VBoxContainer/FamilyName/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 16
-text = "*"
-
-[node name="Label" type="Label" parent="VBoxContainer/FamilyName/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Family Name"
-label_settings = SubResource("LabelSettings_u3m0e")
-
-[node name="FamilyNameField" type="LineEdit" parent="VBoxContainer/FamilyName/VBoxContainer"]
-layout_mode = 2
-placeholder_text = "Exampleson"
-clear_button_enabled = true
-flat = true
-select_all_on_focus = true
-caret_blink = true
-
-[node name="ErrorLabel" type="Label" parent="VBoxContainer/FamilyName/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "Given Name was invalid"
-label_settings = SubResource("LabelSettings_xmktx")
+title = "Family Name"
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2

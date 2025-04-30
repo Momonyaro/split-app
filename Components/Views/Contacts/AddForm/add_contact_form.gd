@@ -1,8 +1,8 @@
 extends Panel
 
 @onready var id_label = $VBoxContainer/Label;
-@onready var given_name_field = $VBoxContainer/GivenName;
-@onready var family_name_field = $VBoxContainer/FamilyName;
+@onready var given_name_field: TextField = $VBoxContainer/NameField;
+@onready var family_name_field: TextField = $VBoxContainer/FamilyField;
 @onready var file_dialog = $FileDialog;
 @onready var avatar_texrect = $VBoxContainer/HBoxContainer/Panel/TextureRect;
 @onready var rotate_button = $VBoxContainer/HBoxContainer/Panel/img_rotate;
@@ -19,20 +19,17 @@ var form_data = {
 
 func _ready():
 	OS.request_permissions();
-	form_data["id"] = _create_id();
+	form_data["id"] = IDUtils.create_id("CTACT");
 	file_dialog.file_selected.connect(_on_avatar_uploaded);
 	remove_button.pressed.connect(_on_img_remove_pressed);
+	given_name_field.value_changed.connect(_on_given_name_field_text_changed);
+	family_name_field.value_changed.connect(_on_family_name_field_text_changed);
 
 	id_label.text = str('id -> ', form_data["id"]);
 
 func _process(_delta):
 	rotate_button.visible = form_data.img_avatar != null;
 	remove_button.visible = form_data.img_avatar != null;
-
-func _create_id() -> String:
-	var date_time = Time.get_datetime_string_from_system();
-	var to_hash = date_time.md5_text().substr(0, 8);
-	return str('ctact_', to_hash).to_upper();
 
 func _on_family_name_field_text_changed(new_text:String):
 	form_data["name_family"] = new_text.strip_edges();
@@ -44,19 +41,14 @@ func _on_given_name_field_text_changed(new_text:String):
 
 func _validate_form() -> bool:
 	var is_valid = true;
-	var given_name_error = given_name_field.get_child(0).get_child(-1);
-	var family_name_error = family_name_field.get_child(0).get_child(-1);
-
-	given_name_error.hide();
-	family_name_error.hide();
+	given_name_field.error_message = "";
+	family_name_field.error_message = "";
 
 	if form_data["name_given"] == "":
-		given_name_error.text = "Given name is required.";
-		given_name_error.show();
+		given_name_field.error_message = "Given name is required.";
 		is_valid = false;
 	if form_data["name_family"] == "":
-		family_name_error.text = "Family name is required.";
-		family_name_error.show();
+		family_name_field.error_message = "Family name is required.";
 		is_valid = false;
 	return is_valid;
 

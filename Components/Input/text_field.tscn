@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://hovqe2lynwk"]
+
+[ext_resource type="Script" uid="uid://c7i7ipox2k55g" path="res://Components/Input/text_field.gd" id="1_v6c8v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1wcul"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_4j8na"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mn737"]
+font_color = Color(0.92549, 0, 0.00392157, 1)
+
+[node name="TextField" type="PanelContainer"]
+offset_right = 537.0
+offset_bottom = 90.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1wcul")
+script = ExtResource("1_v6c8v")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Required" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "*"
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Text Field"
+label_settings = SubResource("LabelSettings_4j8na")
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Enter text"
+clear_button_enabled = true
+flat = true
+select_all_on_focus = true
+caret_blink = true
+caret_blink_interval = 0.1
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+label_settings = SubResource("LabelSettings_mn737")

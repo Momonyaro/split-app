@@ -2,8 +2,8 @@ extends Panel
 
 @onready var input_blocker: Control = $InputBlocker;
 @onready var id_label = $VBoxContainer/Label;
-@onready var given_name_field = $VBoxContainer/GivenName;
-@onready var family_name_field = $VBoxContainer/FamilyName;
+@onready var given_name_field: TextField = $VBoxContainer/NameField;
+@onready var family_name_field: TextField = $VBoxContainer/FamilyField;
 @onready var file_dialog = $FileDialog;
 @onready var avatar_button = $VBoxContainer/HBoxContainer/Panel/avatar_upload;
 @onready var avatar_texrect = $VBoxContainer/HBoxContainer/Panel/TextureRect;
@@ -34,10 +34,8 @@ func _ready():
 	form_data["img_avatar"] = contact.img_avatar;
 
 	id_label.text = str('id -> ', form_data["id"]);
-	var given_name_lineedit = given_name_field.get_child(0).get_child(1);
-	var family_name_lineedit = family_name_field.get_child(0).get_child(1);
-	given_name_lineedit.text = form_data["name_given"];
-	family_name_lineedit.text = form_data["name_family"];
+	given_name_field.overwrite_value(form_data["name_given"]);
+	family_name_field.overwrite_value(form_data["name_family"]);
 
 	if form_data["img_avatar"] != null:
 		rotate_button.visible = true;
@@ -49,33 +47,30 @@ func _ready():
 	file_dialog.file_selected.connect(_on_avatar_uploaded);
 	cancel_button.pressed.connect(_on_cancel_pressed);
 	submit_button.pressed.connect(_on_submit);
-	given_name_lineedit.text_changed.connect(_on_given_name_field_text_changed);
-	family_name_lineedit.text_changed.connect(_on_family_name_field_text_changed);
+	given_name_field.value_changed.connect(_on_given_name_field_text_changed);
+	family_name_field.value_changed.connect(_on_family_name_field_text_changed);
 	avatar_button.pressed.connect(_on_avatar_upload_pressed);
 	rotate_button.pressed.connect(_on_img_rotate_pressed);
 	remove_button.pressed.connect(_on_img_remove_pressed);
 
 func _validate_form() -> bool:
 	var is_valid = true;
-	var given_name_error = given_name_field.get_child(0).get_child(-1);
-	var family_name_error = family_name_field.get_child(0).get_child(-1);
-
-	given_name_error.hide();
-	family_name_error.hide();
+	given_name_field.error_message = "";
+	family_name_field.error_message = "";
 
 	if form_data["name_given"] == "":
-		given_name_error.text = "Given name is required.";
-		given_name_error.show();
+		given_name_field.error_message = "Given name is required.";
 		is_valid = false;
 	if form_data["name_family"] == "":
-		family_name_error.text = "Family name is required.";
-		family_name_error.show();
+		family_name_field.error_message = "Family name is required.";
 		is_valid = false;
 	return is_valid;
 
 func _on_submit():
 	if !_validate_form():
 		return;
+
+	print(form_data);
 
 	# Swap with update contact function
 	var success = SQL.contact_utils.update_contact(form_data);
