@@ -60,8 +60,7 @@ text = "Popover Title"
 label_settings = SubResource("LabelSettings_puade")
 vertical_alignment = 1
 
-[node name="ContentContainer" type="ScrollContainer" parent="ProgramContainer/VBoxContainer"]
+[node name="ContentContainer" type="PanelContainer" parent="ProgramContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_mbimq")
-horizontal_scroll_mode = 0

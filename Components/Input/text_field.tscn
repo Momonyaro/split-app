@@ -52,7 +52,7 @@ clear_button_enabled = true
 flat = true
 select_all_on_focus = true
 caret_blink = true
-caret_blink_interval = 0.1
+caret_blink_interval = 0.25
 
 [node name="ErrorLabel" type="Label" parent="VBoxContainer"]
 visible = false

@@ -16,6 +16,7 @@ func setup(bootstrap: Node):
 				id varchar(255) NOT NULL,
 				deleted boolean NOT NULL DEFAULT false,
 				title varchar(255) NOT NULL DEFAULT 'New Payment',
+				currency varchar(255) NOT NULL DEFAULT 'SEK',
 				created_at varchar(255),
 				PRIMARY KEY (id)
 			)

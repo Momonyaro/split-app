@@ -2,16 +2,6 @@ class_name SQLContactsUtils;
 
 signal contacts_changed(contact_id: String);
 
-func get_contact() -> Contact:
-	SQL.query("
-		SELECT * FROM contacts TAKE 1
-	");
-
-	var result = SQL.get_query_result();
-	if result.is_empty():
-		return null;
-	return Contact.new(result[0]);
-
 func get_contact_by_id(id: String) -> Contact:
 	SQL.query_with_bindings("
 		SELECT * FROM contacts WHERE id = ?

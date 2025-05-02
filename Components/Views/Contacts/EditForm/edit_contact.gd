@@ -70,8 +70,6 @@ func _on_submit():
 	if !_validate_form():
 		return;
 
-	print(form_data);
-
 	# Swap with update contact function
 	var success = SQL.contact_utils.update_contact(form_data);
 	if success:

@@ -42,6 +42,7 @@ class Payment:
 	var id: String;
 	var title: String;
 	var deleted: bool;
+	var currency: String;
 	var created_at: String;
 
 	var line_items: Array;
@@ -51,6 +52,7 @@ class Payment:
 		self.id = dict["id"];
 		self.deleted = dict.get("deleted", false);
 		self.title = dict["title"];
+		self.currency = dict["currency"];
 		self.created_at = dict["created_at"];
 		var parsed_line_items = JSON.parse_string(dict.get("line_items_array", '[]'));
 		self.line_items = [];

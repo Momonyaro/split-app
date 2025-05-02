@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://csl16powua7j"]
+
+[ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="1_hui1b"]
+[ext_resource type="Texture2D" uid="uid://ca4bn843a7636" path="res://Media/Icons/bomb-svgrepo-com.svg" id="1_pm2fa"]
+[ext_resource type="FontFile" uid="uid://bu2il8aandv8j" path="res://Fonts/JetBrainsMono-Light.ttf" id="2_5doun"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hsyn5"]
+font = ExtResource("1_hui1b")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_k06wg"]
+font = ExtResource("2_5doun")
+font_size = 24
+
+[node name="LineItemPrefab" type="PanelContainer"]
+theme_type_variation = &"CPanel"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Line Name"
+label_settings = SubResource("LabelSettings_hsyn5")
+autowrap_mode = 3
+
+[node name="Label2" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Line Cost"
+label_settings = SubResource("LabelSettings_k06wg")
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/icon_max_width = 24
+icon = ExtResource("1_pm2fa")
+flat = true

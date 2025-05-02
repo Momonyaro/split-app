@@ -1,28 +1,30 @@
-[gd_scene load_steps=12 format=3 uid="uid://0qm6p750eqoo"]
+[gd_scene load_steps=23 format=3 uid="uid://0qm6p750eqoo"]
 
 [ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_esjnm"]
 [ext_resource type="Texture2D" uid="uid://dgb45u0p24wq1" path="res://Media/Icons/plus-svgrepo-com.svg" id="2_8q3xe"]
 [ext_resource type="Script" uid="uid://by8opsc5qgq6y" path="res://Components/Views/Payments/AddForm/add_payment.gd" id="2_rkqbb"]
 [ext_resource type="PackedScene" uid="uid://hovqe2lynwk" path="res://Components/Input/text_field.tscn" id="3_n4f4c"]
+[ext_resource type="PackedScene" uid="uid://ygnd52s3nhcc" path="res://Components/Input/step_viewer.tscn" id="3_ucqaw"]
+[ext_resource type="Texture2D" uid="uid://deuqrm5ul6kgm" path="res://Media/Icons/crown-svgrepo-com.svg" id="5_3nyo7"]
+[ext_resource type="Texture2D" uid="uid://bhcj7sjnvtf5a" path="res://Media/Icons/euro-svgrepo-com.svg" id="5_esjnm"]
+[ext_resource type="Texture2D" uid="uid://ca4bn843a7636" path="res://Media/Icons/bomb-svgrepo-com.svg" id="5_hm5lu"]
+[ext_resource type="Texture2D" uid="uid://cibtocs7pq0jb" path="res://Media/Icons/dollar-svgrepo-com.svg" id="7_gdu13"]
+[ext_resource type="Texture2D" uid="uid://bm1hq37xth8vg" path="res://Media/Icons/british-pound-svgrepo-com.svg" id="8_3nyo7"]
+[ext_resource type="Texture2D" uid="uid://85urccjgbvnv" path="res://Media/Icons/yen-svgrepo-com.svg" id="9_k06wg"]
+[ext_resource type="PackedScene" uid="uid://dme720fbhucpj" path="res://Components/Views/Payments/AddForm/line_item_adder.tscn" id="12_k06wg"]
+[ext_resource type="PackedScene" uid="uid://csl16powua7j" path="res://Components/Views/Payments/AddForm/line_item_prefab.tscn" id="13_glx21"]
+[ext_resource type="PackedScene" uid="uid://iksnclt7nlfe" path="res://Components/Views/Payments/AddForm/participant_selector.tscn" id="14_dkjd3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a0aip"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gdj4j"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k06wg"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_gdj4j"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8q3xe"]
-draw_center = false
-border_width_left = 2
-border_color = Color(0.454902, 0.454902, 0.454902, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_8q3xe"]
-font_color = Color(0.452973, 0.452973, 0.452973, 1)
+[sub_resource type="LabelSettings" id="LabelSettings_esjnm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8q3xe"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rkqbb"]
-content_margin_left = 24.0
+content_margin_left = 16.0
 content_margin_top = 16.0
 content_margin_right = 32.0
 content_margin_bottom = 16.0
@@ -36,6 +38,17 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_hm5lu"]
+font_color = Color(0.92549, 0, 0.00392157, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_glx21"]
+font_size = 20
+font_color = Color(0.422115, 0.422115, 0.422115, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dkjd3"]
+font_size = 20
+font_color = Color(1, 0, 0, 1)
 
 [node name="AddPaymentView" type="Panel"]
 anchors_preset = 15
@@ -58,71 +71,26 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 16
 
-[node name="StepViewer" type="PanelContainer" parent="VBoxContainer"]
+[node name="StepViewer" parent="VBoxContainer" instance=ExtResource("3_ucqaw")]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_gdj4j")
+steps = Array[String](["STEPVIEWER"])
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/StepViewer"]
+[node name="STEP_CONTAINER" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_k06wg")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/StepViewer/MarginContainer"]
+[node name="STEP_OVERVIEW" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER"]
+visible = false
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 8
 
-[node name="Label" type="Label" parent="VBoxContainer/StepViewer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Overview"
-label_settings = SubResource("LabelSettings_gdj4j")
-horizontal_alignment = 1
-uppercase = true
-
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/StepViewer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxFlat_8q3xe")
-
-[node name="Label2" type="Label" parent="VBoxContainer/StepViewer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Populate"
-label_settings = SubResource("LabelSettings_8q3xe")
-horizontal_alignment = 1
-uppercase = true
-
-[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/StepViewer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxFlat_8q3xe")
-
-[node name="Label3" type="Label" parent="VBoxContainer/StepViewer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Assign"
-label_settings = SubResource("LabelSettings_8q3xe")
-horizontal_alignment = 1
-uppercase = true
-
-[node name="VSeparator3" type="VSeparator" parent="VBoxContainer/StepViewer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxFlat_8q3xe")
-
-[node name="Label4" type="Label" parent="VBoxContainer/StepViewer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Split!"
-label_settings = SubResource("LabelSettings_8q3xe")
-horizontal_alignment = 1
-uppercase = true
-
-[node name="TextField" parent="VBoxContainer" instance=ExtResource("3_n4f4c")]
+[node name="TextField" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW" instance=ExtResource("3_n4f4c")]
 layout_mode = 2
 title = "Payment Title"
 placeholder = "e.g: New Payment"
 
-[node name="IDLabel" type="Label" parent="VBoxContainer"]
+[node name="IDLabel" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.335116, 0.335116, 0.335116, 1)
 theme_override_constants/line_spacing = 0
@@ -131,11 +99,50 @@ theme_override_font_sizes/font_size = 16
 text = "ID -> paymt_c27b0604"
 uppercase = true
 
-[node name="Control" type="Control" parent="VBoxContainer"]
+[node name="Control2" type="Control" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW"]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 
-[node name="MenuButton" type="MenuButton" parent="VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW"]
+layout_mode = 2
+theme_type_variation = &"CPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Currency"
+label_settings = SubResource("LabelSettings_esjnm")
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/icon_max_width = 24
+theme_override_constants/arrow_margin = 24
+flat = true
+selected = 0
+item_count = 5
+popup/item_0/text = "SEK"
+popup/item_0/icon = ExtResource("5_3nyo7")
+popup/item_0/id = 0
+popup/item_1/text = "EUR"
+popup/item_1/icon = ExtResource("5_esjnm")
+popup/item_1/id = 1
+popup/item_2/text = "USD"
+popup/item_2/icon = ExtResource("7_gdu13")
+popup/item_2/id = 2
+popup/item_3/text = "GBP"
+popup/item_3/icon = ExtResource("8_3nyo7")
+popup/item_3/id = 3
+popup/item_4/text = "JPY"
+popup/item_4/icon = ExtResource("9_k06wg")
+popup/item_4/id = 4
+
+[node name="Control" type="Control" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="MenuButton" type="MenuButton" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW"]
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/icon_max_width = 24
@@ -149,6 +156,114 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_rkqbb")
 text = "Add Participant"
 icon = ExtResource("2_8q3xe")
 flat = false
+
+[node name="ErrorLabel" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW"]
+visible = false
+layout_mode = 2
+text = "At least one participant is needed."
+label_settings = SubResource("LabelSettings_hm5lu")
+
+[node name="AddedParticipants" type="PanelContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW"]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+theme_type_variation = &"CPanel"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/AddedParticipants"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="ParticipantList" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/AddedParticipants/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/AddedParticipants/ScrollContainer/ParticipantList"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/AddedParticipants/ScrollContainer/ParticipantList/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Participant Name"
+
+[node name="Button" type="Button" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/AddedParticipants/ScrollContainer/ParticipantList/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/icon_max_width = 24
+icon = ExtResource("5_hm5lu")
+flat = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/AddedParticipants/ScrollContainer/ParticipantList"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/AddedParticipants/ScrollContainer/ParticipantList/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Participant Name"
+
+[node name="Button" type="Button" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/AddedParticipants/ScrollContainer/ParticipantList/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/icon_max_width = 24
+icon = ExtResource("5_hm5lu")
+flat = true
+
+[node name="STEP_POPULATE" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LineItemAdder" parent="VBoxContainer/STEP_CONTAINER/STEP_POPULATE" instance=ExtResource("12_k06wg")]
+layout_mode = 2
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/STEP_CONTAINER/STEP_POPULATE"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="AddedItemsHeader" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_POPULATE"]
+layout_mode = 2
+text = "Added Items (8)"
+label_settings = SubResource("LabelSettings_glx21")
+
+[node name="ErrorText" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_POPULATE"]
+visible = false
+layout_mode = 2
+text = "Error Text"
+label_settings = SubResource("LabelSettings_dkjd3")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_POPULATE"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_POPULATE/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="LineItemPrefab" parent="VBoxContainer/STEP_CONTAINER/STEP_POPULATE/ScrollContainer/VBoxContainer" instance=ExtResource("13_glx21")]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="VBoxContainer/STEP_CONTAINER/STEP_POPULATE"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="STEP_ASSIGN" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Scroll" type="ScrollContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_ASSIGN"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_ASSIGN/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ParticipantSelector" parent="VBoxContainer/STEP_CONTAINER/STEP_ASSIGN" instance=ExtResource("14_dkjd3")]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="VBoxContainer/STEP_CONTAINER/STEP_ASSIGN"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(0, 64)

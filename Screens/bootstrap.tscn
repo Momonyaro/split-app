@@ -68,7 +68,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hc42q")
-version = "5cf61391a04e49f53a1c4758b733af48924bd720
+version = "92f5207aab94940e5afe6ce693690f122d9c2947
 "
 target_scene = ExtResource("2_8qnnm")
 

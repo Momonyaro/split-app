@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://ygnd52s3nhcc"]
+
+[ext_resource type="Script" uid="uid://bp8i7b35b0aqm" path="res://Components/Input/step_viewer.gd" id="1_7n48s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gdj4j"]
+
+[node name="StepViewer" type="PanelContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 55.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_gdj4j")
+script = ExtResource("1_7n48s")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
