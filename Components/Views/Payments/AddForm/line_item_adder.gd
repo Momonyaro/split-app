@@ -8,6 +8,7 @@ extends PanelContainer
 @onready var line_submit_button: Button = $VBoxContainer/Button;
 
 var on_submit_callback: Callable;
+var payment_id = "";
 
 func _ready():
 	line_submit_button.pressed.connect(_on_submit_pressed);
@@ -16,9 +17,10 @@ func _ready():
 func _process(_delta: float):
 	line_title_label.text = str("Name (", line_title_edit.text.length(), "/", line_title_edit.max_length, ")");
 
-func setup(currency: String, result_callback: Callable):
+func setup(_payment_id: String, currency: String, result_callback: Callable):
 	line_amount_label.text = str("Cost (", currency, ")");
 	on_submit_callback = result_callback;
+	payment_id = _payment_id;
 
 func _on_submit_pressed():
 	var amount_is_valid = line_amount_edit.text.is_valid_float();
@@ -26,6 +28,7 @@ func _on_submit_pressed():
 
 	var line_item: SQLPaymentUtils.LineItem = SQLPaymentUtils.LineItem.new({
 		"id": IDUtils.create_id('PAYLI'),
+		"payment_id": payment_id,
 		"title": line_title_edit.text,
 		"amount_cents": roundi(parsed_amount * 100), # Round up to nearest cent to avoid floating point shenanigans.
 	});

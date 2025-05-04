@@ -29,8 +29,8 @@ func setup(bootstrap: Node):
 				id varchar(255) NOT NULL,
 				line_item_id varchar(255) NOT NULL,
 				participant_id varchar(255) NOT NULL,
-				fixed_amount_cents integer NOT NULL,
-				fixed_amount_percentage integer NOT NULL,
+				fixed_amount_cents integer,
+				fixed_amount_percentage integer,
 				PRIMARY KEY (id),
 				FOREIGN KEY (line_item_id) REFERENCES payment_line_items(id),
 				FOREIGN KEY (participant_id) REFERENCES payment_participants(id)

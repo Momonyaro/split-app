@@ -15,6 +15,10 @@ func _ready():
 		view_manager.show_popover('Add Payment', 'nav-add-payment');
 	);
 
+	SQL.payment_utils.payments_modified.connect(func(_x):
+		populate();
+	);
+
 	setup_sorting();
 	populate();
 

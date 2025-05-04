@@ -1,0 +1,161 @@
+[gd_scene load_steps=8 format=3 uid="uid://bf8px58b504h"]
+
+[ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_rg28r"]
+[ext_resource type="Script" uid="uid://drt6jwjmpdf1h" path="res://Components/Prompt/form_participant_prompt.gd" id="2_cepkd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_klihh"]
+content_margin_left = 32.0
+content_margin_top = 32.0
+content_margin_right = 32.0
+content_margin_bottom = 32.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_cepkd"]
+font_color = Color(0.531448, 0.531448, 0.531448, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2prio"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cepkd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rg28r"]
+content_margin_left = 8.0
+content_margin_right = 8.0
+draw_center = false
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[node name="FormParticipantPrompt" type="Control" groups=["$PROMPT"]]
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rg28r")
+script = ExtResource("2_cepkd")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.580392)
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -126.0
+offset_top = -169.0
+offset_right = 126.0
+offset_bottom = 169.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(126, 338)
+theme_override_styles/panel = SubResource("StyleBoxFlat_klihh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Header" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Specify Assignment"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FieldTitle" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Max Value:"
+label_settings = SubResource("LabelSettings_cepkd")
+
+[node name="FieldTitle2" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1312 SEK"
+label_settings = SubResource("LabelSettings_cepkd")
+horizontal_alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FieldTitle" type="Label" parent="PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Amount (SEK)"
+label_settings = SubResource("LabelSettings_2prio")
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cepkd")
+theme_override_styles/normal = SubResource("StyleBoxFlat_rg28r")
+text = "0"
+placeholder_text = "123.32"
+context_menu_enabled = false
+caret_blink = true
+caret_blink_interval = 0.25
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="FieldTitle" type="Label" parent="PanelContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Percentage (0%)"
+label_settings = SubResource("LabelSettings_2prio")
+
+[node name="HSlider" type="HSlider" parent="PanelContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"PrimaryButton"
+text = "Submit"
+
+[node name="Control" type="Control" parent="PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+
+[node name="Instructions" type="Label" parent="PanelContainer/Control"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 48.0
+offset_bottom = 95.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.250576, 0.250576, 0.250576, 1)
+theme_override_font_sizes/font_size = 16
+text = "Tap outside to close"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[connection signal="gui_input" from="ColorRect" to="." method="_on_background_gui_input"]

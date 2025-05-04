@@ -30,6 +30,7 @@ corner_radius_bottom_left = 8
 [node name="ParticipantSelector" type="PanelContainer"]
 offset_right = 538.0
 offset_bottom = 86.0
+theme = ExtResource("4_bfpis")
 theme_type_variation = &"CPanel"
 script = ExtResource("1_68l5k")
 

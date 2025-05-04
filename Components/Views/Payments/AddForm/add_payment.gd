@@ -23,19 +23,25 @@ var contacts = [];
 var line_item_prefab = preload("res://Components/Views/Payments/AddForm/line_item_prefab.tscn");
 
 @onready var participant_selector = $VBoxContainer/STEP_CONTAINER/STEP_ASSIGN/ParticipantSelector;
+@onready var allocate_list_parent = $VBoxContainer/STEP_CONTAINER/STEP_ASSIGN/Scroll/PanelContainer/VBoxContainer;
+var allocate_item_prefab = preload("res://Components/Views/Payments/AddForm/allocate_line_item.tscn");
+
+@onready var total_label: Label = $VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/MarginContainer/VBoxContainer/Label2;
+@onready var remainder_label: Label = $VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/PanelContainer/VBoxContainer/HBoxContainer5/RemainderValue;
+@onready var summary_part_list_parent: VBoxContainer = $VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/PanelContainer/VBoxContainer/VBoxContainer;
+var summary_part_list_item_prefab = preload("res://Components/Views/Payments/AddForm/summary_part_list_item.tscn");
 
 @onready var cancel_button: Button = $MarginContainer/Buttons/Cancel;
 @onready var submit_button: Button = $MarginContainer/Buttons/Submit;
-
-var current_step = STEP_OVERVIEW;
-var current_participant = "";
 
 var form_data = {
 	"id": IDUtils.create_id('PAYMT'),
 	"title": "New Payment",
 	"currency": "SEK",
 	"participants": [],
-	"line_items": []
+	"line_items": [],
+	"current_step": STEP_OVERVIEW,
+	"current_participant": ""
 };
 
 func _ready() -> void:
@@ -76,7 +82,15 @@ func _process(_delta: float) -> void:
 func change_step(step: int) -> void:
 	step = clampi(step, 0, STEP_CONFIRM);
 
-	match current_step:
+	if step == form_data.current_step && step == STEP_CONFIRM:
+		# Send it all to the SQL db.
+		SQL.payment_utils.add_payment(form_data);
+		populate();
+		await popover_parent._t_close_menu();
+
+		pass;
+
+	match form_data.current_step:
 		STEP_OVERVIEW:
 			_tween_out_step($VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW);
 			pass;
@@ -87,14 +101,13 @@ func change_step(step: int) -> void:
 			_tween_out_step($VBoxContainer/STEP_CONTAINER/STEP_ASSIGN);
 			pass;
 		STEP_CONFIRM:
-			submit_button.text = "Submit";
-			step_viewer.set_active(step, true);
+			_tween_out_step($VBoxContainer/STEP_CONTAINER/STEP_CONFIRM);
 			pass;
 
 	cancel_button.text = "Back";
 	submit_button.text = "Next";
-	step_viewer.set_active(current_step, false);
-	current_step = step;
+	step_viewer.set_active(form_data.current_step, false);
+	form_data.current_step = step;
 
 	match step:
 		STEP_OVERVIEW:
@@ -111,8 +124,9 @@ func change_step(step: int) -> void:
 			step_viewer.set_active(step, true);
 			pass;
 		STEP_CONFIRM:
-			submit_button.text = "Submit";
+			_tween_in_step($VBoxContainer/STEP_CONTAINER/STEP_CONFIRM);
 			step_viewer.set_active(step, true);
+			submit_button.text = "Submit";
 			pass;
 
 func populate():
@@ -121,6 +135,7 @@ func populate():
 	populate_participants();
 	populate_line_items();
 	populate_assignments();
+	populate_summary();
 	pass;
 
 func populate_participants():
@@ -176,7 +191,7 @@ func populate_participants():
 	pass;
 
 func populate_line_items():
-	line_item_adder.setup(form_data.currency, _on_line_item_added);
+	line_item_adder.setup(form_data.id, form_data.currency, _on_line_item_added);
 	added_items_header.text = str("Added Items (", form_data["line_items"].size(), ")");
 
 	for child in line_item_list.get_children():
@@ -198,7 +213,88 @@ func populate_line_items():
 	pass;
 
 func populate_assignments():
-	participant_selector.populate(form_data.participants, current_participant, _on_assign_participant_selected);
+	participant_selector.populate(form_data.participants, form_data.current_participant, _on_assign_participant_selected);
+
+	for child in allocate_list_parent.get_children():
+		child.queue_free();
+
+	for i in form_data["line_items"].size():
+		var line_item = form_data["line_items"][i];
+
+		var callback = func():
+			if form_data.current_participant == "":
+				return;
+
+			var filtered = line_item.participants.filter(func(participant):
+				return participant.participant_id != form_data.current_participant;
+			);
+
+			if filtered.size() != line_item.participants.size():
+				line_item.participants = filtered;
+				populate();
+				return;
+
+			var line_participant = SQLPaymentUtils.LineItemParticipant.new({
+				"id": IDUtils.create_id('LIITP'),
+				"line_item_id": line_item.id,
+				"participant_id": form_data.current_participant,
+				"fixed_amount_cents": null,
+				"fixed_amount_percentage": null
+			});
+			line_item.participants.push_back(line_participant);
+			form_data["line_items"][i] = line_item;
+			populate();
+
+		var instance = allocate_item_prefab.instantiate();
+		instance.populate(line_item, form_data, callback);
+		allocate_list_parent.add_child(instance);
+
+func populate_summary():
+	var total = 0;
+	var person_total = {};
+	var remainder = 0;
+
+	for participant in form_data.participants:
+		person_total[participant.id] = 0;
+
+	for line_item in form_data["line_items"]:
+		var line_total = line_item.amount_cents;
+		total += line_total;
+
+		var fixed_parts = line_item.participants.filter(func(p): return p.has_fixed_amount_or_percentage());
+		var floating_parts = line_item.participants.filter(func(p): return !p.has_fixed_amount_or_percentage());
+
+		for fixed in fixed_parts:
+			if fixed.has_fixed_amount():
+				person_total[fixed.participant_id] += fixed.fixed_amount_cents;
+				line_total -= fixed.fixed_amount_cents;
+			else:
+				person_total[fixed.participant_id] += line_total * fixed.fixed_amount_percentage / 100.0;
+				line_total -= person_total[fixed.participant_id];
+
+		var floating_div = (line_total / floating_parts.size()) if floating_parts.size() > 0 else 0;
+		var floating_amount = floating_div;
+		for floating in floating_parts:
+			person_total[floating.participant_id] += floating_amount;
+			line_total -= floating_amount;
+
+		remainder += line_total; # Add the remaining amount to the remainder variable
+
+	for child in summary_part_list_parent.get_children():
+		child.queue_free();
+
+	for participant in form_data.participants:
+		var contact = contacts.filter(func(c):
+			return c.id == participant.contact_id;
+		)[0];
+
+		var instance = summary_part_list_item_prefab.instantiate();
+		instance.populate(contact.get_name(), person_total[participant.id], form_data.currency);
+		summary_part_list_parent.add_child(instance);
+		pass;
+
+	total_label.text = str(total / 100.0, ' ', form_data.currency);
+	remainder_label.text = str(remainder / 100.0, ' ', form_data.currency);
 
 func _create_participant_list_item(title: String, editable: bool, callback: Callable) -> Control:
 	var item = HBoxContainer.new();
@@ -225,7 +321,7 @@ func _validate_step() -> bool:
 	$VBoxContainer/STEP_CONTAINER/STEP_POPULATE/ErrorText.hide();
 
 	var valid = true;
-	if current_step == STEP_OVERVIEW:
+	if form_data.current_step == STEP_OVERVIEW:
 		if form_data.title.length() == 0:
 			title_field.error_message = "Title cannot be empty";
 			valid = false;
@@ -233,7 +329,7 @@ func _validate_step() -> bool:
 			$VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/ErrorLabel.show();
 			$VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/ErrorLabel.text = "Participants cannot be empty";
 			valid = false;
-	elif current_step == STEP_POPULATE:
+	elif form_data.current_step == STEP_POPULATE:
 		if form_data.line_items.size() == 0:
 			$VBoxContainer/STEP_CONTAINER/STEP_POPULATE/ErrorText.show();
 			$VBoxContainer/STEP_CONTAINER/STEP_POPULATE/ErrorText.text = "Line items cannot be empty";
@@ -251,20 +347,20 @@ func _on_currency_changed(idx_selected: int):
 	form_data["currency"] = new_currency;
 	populate();
 
-func _on_participant_selected(id: int):
+func _on_participant_selected(idx: int):
 	var participant = SQLPaymentUtils.PaymentParticipant.new({
 		"id": IDUtils.create_id('PPART'),
 		"payment_id": form_data["id"],
-		"contact_id": contacts[id].id
+		"contact_id": contacts[idx].id
 	});
 	form_data["participants"].push_back(participant);
 	populate();
 
 func _on_assign_participant_selected(id: String):
-	if current_participant == id:
-		current_participant = "";
+	if form_data.current_participant == id:
+		form_data.current_participant = "";
 	else:
-		current_participant = id;
+		form_data.current_participant = id;
 	populate();
 
 func _on_line_item_added(item: SQLPaymentUtils.LineItem):
@@ -273,11 +369,11 @@ func _on_line_item_added(item: SQLPaymentUtils.LineItem):
 
 func _on_submit_pressed():
 	if _validate_step():
-		change_step(current_step + 1);
+		change_step(form_data.current_step + 1);
 
 func _on_cancel_pressed():
-	if current_step > STEP_OVERVIEW:
-		change_step(current_step - 1);
+	if form_data.current_step > STEP_OVERVIEW:
+		change_step(form_data.current_step - 1);
 		return;
 	await popover_parent._t_close_menu();
 

@@ -1,0 +1,91 @@
+[gd_scene load_steps=11 format=3 uid="uid://be5i77xat7l4g"]
+
+[ext_resource type="Script" uid="uid://xh3mn425gc70" path="res://Components/Views/Payments/AddForm/allocate_line_item.gd" id="1_d2v4j"]
+[ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="1_s2c2j"]
+[ext_resource type="FontFile" uid="uid://bu2il8aandv8j" path="res://Fonts/JetBrainsMono-Light.ttf" id="2_d2v4j"]
+[ext_resource type="PackedScene" uid="uid://df2bv0dq1gohe" path="res://Components/Views/Payments/AddForm/list_item_participant_object.tscn" id="3_747c0"]
+[ext_resource type="Texture2D" uid="uid://wgfs7hdh20me" path="res://Media/Logo/icon_192x192.png" id="4_w8yrn"]
+[ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="5_oi6r1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5ficj"]
+font = ExtResource("1_s2c2j")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_scbhf"]
+font = ExtResource("2_d2v4j")
+font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ficj"]
+bg_color = Color(0.236093, 0.236093, 0.236093, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d2v4j"]
+
+[node name="AllocateLineItem" type="PanelContainer"]
+offset_right = 485.0
+offset_bottom = 121.0
+size_flags_horizontal = 3
+theme = ExtResource("5_oi6r1")
+theme_type_variation = &"CPanel"
+script = ExtResource("1_d2v4j")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LineTitle" type="Label" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Line Name"
+label_settings = SubResource("LabelSettings_5ficj")
+autowrap_mode = 2
+
+[node name="LineTotal" type="Label" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Line Cost"
+label_settings = SubResource("LabelSettings_scbhf")
+horizontal_alignment = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="ListItemParticipantObject" parent="VBoxContainer/ScrollContainer/HBoxContainer" instance=ExtResource("3_747c0")]
+layout_mode = 2
+
+[node name="ParticipantBox" type="PanelContainer" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+clip_children = 2
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5ficj")
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/ScrollContainer/HBoxContainer/ParticipantBox"]
+layout_mode = 2
+texture = ExtResource("4_w8yrn")
+expand_mode = 1
+
+[node name="Button" type="Button" parent="VBoxContainer/ScrollContainer/HBoxContainer/ParticipantBox"]
+layout_mode = 2
+theme = ExtResource("5_oi6r1")
+theme_type_variation = &"ParticipantButton"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_d2v4j")
+flat = true

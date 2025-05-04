@@ -1,0 +1,145 @@
+[gd_scene load_steps=13 format=3 uid="uid://b6b0635jikn5q"]
+
+[ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_abeu7"]
+[ext_resource type="Script" uid="uid://bwghd8fpnr8g7" path="res://Components/Views/Payments/ViewForm/view_payment.gd" id="2_jml7f"]
+[ext_resource type="PackedScene" uid="uid://dpcusloainla0" path="res://Components/Views/Payments/AddForm/summary_part_list_item.tscn" id="3_jml7f"]
+[ext_resource type="Texture2D" uid="uid://ca4bn843a7636" path="res://Media/Icons/bomb-svgrepo-com.svg" id="4_mgifd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mmau7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jml7f"]
+content_margin_left = 16.0
+draw_center = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_abeu7"]
+font_size = 56
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_360iu"]
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7awkl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgifd"]
+border_width_top = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_q2qm0"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_h3epd"]
+font_size = 20
+
+[node name="ViewPayment" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_abeu7")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_mmau7")
+script = ExtResource("2_jml7f")
+
+[node name="LIST" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="LIST"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.335116, 0.335116, 0.335116, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/paragraph_spacing = 0
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_jml7f")
+text = "CREATED -> "
+uppercase = true
+
+[node name="MarginContainer" type="MarginContainer" parent="LIST"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LIST/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[node name="Label" type="Label" parent="LIST/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Total"
+uppercase = true
+
+[node name="Label2" type="Label" parent="LIST/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "231.22 SEK"
+label_settings = SubResource("LabelSettings_abeu7")
+
+[node name="HSeparator" type="HSeparator" parent="LIST/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxFlat_360iu")
+
+[node name="Control2" type="Control" parent="LIST"]
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="LIST"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Edit" type="Button" parent="LIST/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SecondaryButton"
+disabled = true
+text = "Edit"
+
+[node name="Delete" type="Button" parent="LIST/Buttons"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_type_variation = &"DeleteButton"
+icon = ExtResource("4_mgifd")
+icon_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="LIST"]
+layout_mode = 2
+theme_type_variation = &"CPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LIST/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="LIST/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Payment Breakdown"
+label_settings = SubResource("LabelSettings_7awkl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LIST/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="SummaryPartListItem" parent="LIST/PanelContainer/VBoxContainer/VBoxContainer" instance=ExtResource("3_jml7f")]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="LIST/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_mgifd")
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="LIST/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RemainderTitle" type="Label" parent="LIST/PanelContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Remaining"
+label_settings = SubResource("LabelSettings_q2qm0")
+
+[node name="RemainderValue" type="Label" parent="LIST/PanelContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "400.0 SEK"
+label_settings = SubResource("LabelSettings_h3epd")
+horizontal_alignment = 2

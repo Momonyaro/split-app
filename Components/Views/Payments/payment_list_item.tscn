@@ -34,7 +34,8 @@ func populate(payment: SQLPaymentUtils.Payment):
 	
 	title_label.text = payment.title;
 	amount_label.text = str(\"%.2f\" % (payment.get_total_amount_cents() / 100.0), \" SEK\");
-	created_label.text = str(\"> Created: \", payment.created_at);
+	var date = payment.get_created_at();
+	created_label.text = str(\"Created -> \", date.year, \"-\", \"%02d\" % date.month, \"-\", \"%02d\" % date.day);
 	participant_label.text = str(payment.participants.size(), \" Participants\");
 	edit_key = str('nav-view-payment/', payment.id);
 	

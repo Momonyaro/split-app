@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://0qm6p750eqoo"]
+[gd_scene load_steps=32 format=3 uid="uid://0qm6p750eqoo"]
 
 [ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_esjnm"]
 [ext_resource type="Texture2D" uid="uid://dgb45u0p24wq1" path="res://Media/Icons/plus-svgrepo-com.svg" id="2_8q3xe"]
@@ -13,7 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://85urccjgbvnv" path="res://Media/Icons/yen-svgrepo-com.svg" id="9_k06wg"]
 [ext_resource type="PackedScene" uid="uid://dme720fbhucpj" path="res://Components/Views/Payments/AddForm/line_item_adder.tscn" id="12_k06wg"]
 [ext_resource type="PackedScene" uid="uid://csl16powua7j" path="res://Components/Views/Payments/AddForm/line_item_prefab.tscn" id="13_glx21"]
+[ext_resource type="PackedScene" uid="uid://be5i77xat7l4g" path="res://Components/Views/Payments/AddForm/allocate_line_item.tscn" id="14_02526"]
 [ext_resource type="PackedScene" uid="uid://iksnclt7nlfe" path="res://Components/Views/Payments/AddForm/participant_selector.tscn" id="14_dkjd3"]
+[ext_resource type="PackedScene" uid="uid://dpcusloainla0" path="res://Components/Views/Payments/AddForm/summary_part_list_item.tscn" id="16_uii04"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a0aip"]
 
@@ -49,6 +51,26 @@ font_color = Color(0.422115, 0.422115, 0.422115, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_dkjd3"]
 font_size = 20
 font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_02526"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_02526"]
+font_size = 56
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ficj"]
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_uii04"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_02526"]
+border_width_top = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rt7ud"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_5ficj"]
+font_size = 20
 
 [node name="AddPaymentView" type="Panel"]
 anchors_preset = 15
@@ -247,6 +269,7 @@ custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 
 [node name="STEP_ASSIGN" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 8
 
@@ -254,9 +277,18 @@ theme_override_constants/separation = 8
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_ASSIGN/Scroll"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_ASSIGN/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_02526")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_ASSIGN/Scroll/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="AllocateLineItem" parent="VBoxContainer/STEP_CONTAINER/STEP_ASSIGN/Scroll/PanelContainer/VBoxContainer" instance=ExtResource("14_02526")]
+layout_mode = 2
 
 [node name="ParticipantSelector" parent="VBoxContainer/STEP_CONTAINER/STEP_ASSIGN" instance=ExtResource("14_dkjd3")]
 layout_mode = 2
@@ -264,6 +296,80 @@ layout_mode = 2
 [node name="Spacer" type="Control" parent="VBoxContainer/STEP_CONTAINER/STEP_ASSIGN"]
 custom_minimum_size = Vector2(0, 72)
 layout_mode = 2
+
+[node name="STEP_CONFIRM" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Control" type="Control" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[node name="Label" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Total"
+uppercase = true
+
+[node name="Label2" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "231.22 SEK"
+label_settings = SubResource("LabelSettings_02526")
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxFlat_5ficj")
+
+[node name="Control2" type="Control" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM"]
+layout_mode = 2
+theme_type_variation = &"CPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Payment Breakdown"
+label_settings = SubResource("LabelSettings_uii04")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="SummaryPartListItem" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/PanelContainer/VBoxContainer/VBoxContainer" instance=ExtResource("16_uii04")]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_02526")
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RemainderTitle" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/PanelContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Remaining"
+label_settings = SubResource("LabelSettings_rt7ud")
+
+[node name="RemainderValue" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_CONFIRM/PanelContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "400.0 SEK"
+label_settings = SubResource("LabelSettings_5ficj")
+horizontal_alignment = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(0, 64)

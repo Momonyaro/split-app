@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://df2bv0dq1gohe"]
+
+[ext_resource type="Texture2D" uid="uid://wgfs7hdh20me" path="res://Media/Logo/icon_192x192.png" id="1_0qls2"]
+[ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_2hb4r"]
+[ext_resource type="Script" uid="uid://cgl6ofa1uq0bs" path="res://Components/Views/Payments/AddForm/list_item_participant_object.gd" id="1_lk1w6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ficj"]
+bg_color = Color(0.109712, 0.109712, 0.109712, 1)
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lk1w6"]
+content_margin_left = 16.0
+content_margin_top = 0.0
+content_margin_right = 16.0
+content_margin_bottom = 0.0
+bg_color = Color(0.174985, 0.174985, 0.174984, 1)
+draw_center = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_rt7ud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rt7ud"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="ListItemParticipantObject" type="PanelContainer"]
+clip_children = 2
+custom_minimum_size = Vector2(48, 48)
+offset_right = 48.0
+offset_bottom = 48.0
+theme = ExtResource("1_2hb4r")
+theme_override_styles/panel = SubResource("StyleBoxFlat_5ficj")
+script = ExtResource("1_lk1w6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ConstraintBox" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lk1w6")
+
+[node name="Label" type="Label" parent="HBoxContainer/ConstraintBox"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "20%"
+label_settings = SubResource("LabelSettings_rt7ud")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AvatarBox" type="PanelContainer" parent="HBoxContainer"]
+clip_children = 1
+z_index = 1
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rt7ud")
+
+[node name="Avatar" type="TextureRect" parent="HBoxContainer/AvatarBox"]
+layout_mode = 2
+texture = ExtResource("1_0qls2")
+expand_mode = 1
+
+[node name="Button" type="Button" parent="HBoxContainer/AvatarBox"]
+layout_mode = 2
+theme_type_variation = &"ParticipantButton"
+disabled = true
+flat = true
