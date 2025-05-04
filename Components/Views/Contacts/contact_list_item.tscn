@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://c55cciwn63htn"]
+[gd_scene load_steps=9 format=3 uid="uid://c55cciwn63htn"]
 
 [ext_resource type="Texture2D" uid="uid://bwnh85uo7uhcj" path="res://icon.svg" id="1_3t4vj"]
 [ext_resource type="Theme" uid="uid://0y4va3gywhgo" path="res://Data/theme_resource.tres" id="1_v0265"]
 [ext_resource type="FontFile" uid="uid://btoq3ghnql1" path="res://Fonts/JetBrainsMono-Bold.ttf" id="2_v0265"]
-[ext_resource type="Texture2D" uid="uid://bo7q40wtibffu" path="res://Media/Icons/pencil-svgrepo-com.svg" id="3_707dx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8fpwb"]
 bg_color = Color(0, 0, 0, 1)
@@ -21,13 +20,11 @@ resource_name = "ContactListItem"
 script/source = "extends PanelContainer
 
 var name_label: Label;
-var edit_btn: Button;
 var avatar_panel: Panel;
 var edit_key: String;
 
 func populate(contact: SQLContactsUtils.Contact):
 	name_label = $MarginContainer/HBoxContainer/Label;
-	edit_btn = $MarginContainer/HBoxContainer/Button;
 	avatar_panel = $MarginContainer/HBoxContainer/Panel;
 	
 	name_label.text = contact.get_name();
@@ -64,8 +61,6 @@ corner_radius_bottom_left = 8
 font = ExtResource("2_v0265")
 font_size = 24
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5s7e5"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3t4vj"]
 
 [node name="ContactListItem" type="PanelContainer"]
@@ -73,6 +68,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 76.0
 grow_horizontal = 2
+mouse_filter = 1
 theme = ExtResource("1_v0265")
 theme_override_styles/panel = SubResource("StyleBoxFlat_8fpwb")
 script = SubResource("GDScript_3t4vj")
@@ -114,6 +110,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 color = Color(0.492699, 0.776612, 0.401913, 1)
 
 [node name="Initials" type="Label" parent="MarginContainer/HBoxContainer/Panel/ColoredBack"]
@@ -136,20 +133,9 @@ size_flags_vertical = 1
 text = "John Doe"
 text_overrun_behavior = 3
 
-[node name="Button" type="Button" parent="MarginContainer/HBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/icon_max_width = 24
-theme_override_styles/focus = SubResource("StyleBoxEmpty_5s7e5")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_5s7e5")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_5s7e5")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_5s7e5")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_5s7e5")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_5s7e5")
-icon = ExtResource("3_707dx")
-
 [node name="edit_btn" type="Button" parent="."]
 layout_mode = 2
+mouse_filter = 1
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3t4vj")
 flat = true
 

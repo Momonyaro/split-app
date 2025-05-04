@@ -18,6 +18,7 @@ font = ExtResource("1_osmm4")
 font_size = 20
 
 [node name="NoContentItem" type="PanelContainer"]
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_8fpwb")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

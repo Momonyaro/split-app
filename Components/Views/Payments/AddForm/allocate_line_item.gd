@@ -2,35 +2,31 @@ extends PanelContainer
 
 var participant_prefab = preload("res://Components/Views/Payments/AddForm/list_item_participant_object.tscn");
 var prompt = preload("res://Components/Prompt/form_participant_prompt.tscn");
-var hold_time = 0.3;
-var _hold_timer = 0.0;
 var holding = false;
 var form_data: Dictionary;
 var line_item: SQLPaymentUtils.LineItem;
 
 var click_action: Callable;
-var hold_action: Callable;
+var hold_action: Callable = on_hold;
 
-func _ready() -> void:
-	_hold_timer = hold_time;
+var click_threshold = 0.2;
+var _click_timer = 0;
 
 func _process(delta: float) -> void:
 	if holding:
-		_hold_timer -= delta;
+		_click_timer += delta;
+	else:
+		_click_timer = 0;
 
 func populate(_line_item: SQLPaymentUtils.LineItem, _form_data: Dictionary, callback: Callable):
 	form_data = _form_data;
 	line_item = _line_item;
 	var list_parent = $VBoxContainer/ScrollContainer/HBoxContainer;
-	var button = $Button;
 	$VBoxContainer/HBoxContainer2/LineTitle.text = line_item.title;
 	$VBoxContainer/HBoxContainer2/LineTotal.text = str(line_item.amount_cents / 100.0, ' ', form_data.currency);
 
 	click_action = callback;
 	hold_action = on_hold;
-
-	button.button_down.connect(on_start_press)
-	button.button_up.connect(on_end_press)
 
 	for child in list_parent.get_children():
 		child.queue_free()
@@ -88,16 +84,19 @@ func on_hold():
 	hold_prompt.set_participant(form_data.current_participant);
 	get_tree().root.add_child(hold_prompt);
 
-func on_start_press():
-	holding = true;
-	_hold_timer = hold_time;
+func _on_button_gui_input(event:InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
+			hold_action.call();
 
-func on_end_press():
-	holding = false;
-	if form_data.current_participant == "":
-		return;
 
-	if _hold_timer <= 0:
-		hold_action.call();
-	else:
+func _on_button_pressed() -> void:
+	if _click_timer < click_threshold:
 		click_action.call();
+	holding = false;
+	pass # Replace with function body.
+
+
+func _on_button_button_down() -> void:
+	holding = true;
+	pass # Replace with function body.

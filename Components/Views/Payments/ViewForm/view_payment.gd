@@ -72,8 +72,8 @@ func populate():
 		summary_part_list_parent.add_child(instance);
 		pass;
 
-	total_label.text = str(total / 100.0, ' ', payment.currency);
-	remainder_label.text = str(remainder / 100.0, ' ', payment.currency);
+	total_label.text = str("%0.2f" % (total / 100.0), ' ', payment.currency);
+	remainder_label.text = str("%0.2f" % (remainder / 100.0), ' ', payment.currency);
 
 func _on_explosion():
 	SQL.payment_utils.delete_payment(payment.id);

@@ -41,7 +41,7 @@ func _ready():
 
 func on_slider_changed(value: float):
 	current_amount = value / 100.0 * total_max;
-	amount_line_edit.text = str("%.2f" % current_amount);
+	amount_line_edit.text = str("%0.2f" % current_amount);
 	percent_label.text = str("Percentage (", roundi(current_amount / total_max * 100) if total_max > 0 else 0, "%)");
 	submitting_percentile = true;
 

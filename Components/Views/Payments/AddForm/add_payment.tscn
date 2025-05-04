@@ -103,7 +103,6 @@ size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_k06wg")
 
 [node name="STEP_OVERVIEW" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 8
 
@@ -178,6 +177,8 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_rkqbb")
 text = "Add Participant"
 icon = ExtResource("2_8q3xe")
 flat = false
+item_count = 1
+popup/item_0/id = 2
 
 [node name="ErrorLabel" type="Label" parent="VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW"]
 visible = false
@@ -298,6 +299,7 @@ custom_minimum_size = Vector2(0, 72)
 layout_mode = 2
 
 [node name="STEP_CONFIRM" type="VBoxContainer" parent="VBoxContainer/STEP_CONTAINER"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 8
 

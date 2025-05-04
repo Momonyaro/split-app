@@ -93,6 +93,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/icon_max_width = 128
 theme_override_styles/focus = SubResource("StyleBoxEmpty_c6jvw")
+button_mask = 3
 icon = ExtResource("2_c6jvw")
 flat = true
 icon_alignment = 1

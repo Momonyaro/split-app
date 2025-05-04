@@ -13,6 +13,7 @@ font = ExtResource("2_5doun")
 font_size = 24
 
 [node name="LineItemPrefab" type="PanelContainer"]
+mouse_filter = 1
 theme_type_variation = &"CPanel"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]

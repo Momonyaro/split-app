@@ -31,14 +31,14 @@ func populate(payment: SQLPaymentUtils.Payment):
 	amount_label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/PaymentTitle2
 	created_label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Label;
 	participant_label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Label2;
-	
+
 	title_label.text = payment.title;
-	amount_label.text = str(\"%.2f\" % (payment.get_total_amount_cents() / 100.0), \" SEK\");
+	amount_label.text = str(\"%0.2f\" % (payment.get_total_amount_cents() / 100.0), \" SEK\");
 	var date = payment.get_created_at();
 	created_label.text = str(\"Created -> \", date.year, \"-\", \"%02d\" % date.month, \"-\", \"%02d\" % date.day);
 	participant_label.text = str(payment.participants.size(), \" Participants\");
 	edit_key = str('nav-view-payment/', payment.id);
-	
+
 	pass;
 
 func _on_edit():
@@ -57,6 +57,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 76.0
 grow_horizontal = 2
+mouse_filter = 1
 theme = ExtResource("1_sq6m8")
 theme_override_styles/panel = SubResource("StyleBoxFlat_8fpwb")
 script = SubResource("GDScript_o1pck")
@@ -111,6 +112,7 @@ label_settings = SubResource("LabelSettings_bhhjj")
 
 [node name="edit_btn" type="Button" parent="."]
 layout_mode = 2
+mouse_filter = 1
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3t4vj")
 flat = true
 

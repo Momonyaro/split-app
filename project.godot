@@ -43,6 +43,10 @@ enabled=PackedStringArray("res://addons/godot-sqlite/plugin.cfg")
 $VIEW_MANAGER=""
 $PROMPT=""
 
+[input_devices]
+
+pointing/android/enable_long_press_as_right_click=true
+
 [rendering]
 
 renderer/rendering_method="mobile"

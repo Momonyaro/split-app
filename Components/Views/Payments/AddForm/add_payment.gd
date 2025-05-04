@@ -14,6 +14,7 @@ var contacts = [];
 @onready var id_label: Label = $VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/IDLabel;
 @onready var currency_field: OptionButton = $VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/PanelContainer/VBoxContainer/OptionButton;
 @onready var participant_menu: MenuButton = $VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/MenuButton;
+var index_to_contact_id = {};
 @onready var participant_added_parent = $VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/AddedParticipants;
 @onready var participant_added: VBoxContainer = $VBoxContainer/STEP_CONTAINER/STEP_OVERVIEW/AddedParticipants/ScrollContainer/ParticipantList;
 
@@ -148,6 +149,7 @@ func populate_participants():
 		participant_menu.disabled = true;
 
 	var no_available_participants = true;
+	index_to_contact_id.clear();
 	for i in contacts.size():
 		var contact = contacts[i];
 		var reserved = current_participants.filter(func (p): return p["contact_id"] == contact["id"]).size() > 0;
@@ -155,6 +157,7 @@ func populate_participants():
 			no_available_participants = false;
 
 		var has_avatar = contact.img_avatar != null;
+		index_to_contact_id[i] = contact.id;
 
 		if has_avatar:
 			popup.add_icon_item(ImageTexture.create_from_image(contact.get_avatar()), contact.get_name(), i);
@@ -293,8 +296,8 @@ func populate_summary():
 		summary_part_list_parent.add_child(instance);
 		pass;
 
-	total_label.text = str(total / 100.0, ' ', form_data.currency);
-	remainder_label.text = str(remainder / 100.0, ' ', form_data.currency);
+	total_label.text = str("%0.2f" % (total / 100.0), ' ', form_data.currency);
+	remainder_label.text = str("%0.2f" % (remainder / 100.0), ' ', form_data.currency);
 
 func _create_participant_list_item(title: String, editable: bool, callback: Callable) -> Control:
 	var item = HBoxContainer.new();
@@ -348,10 +351,16 @@ func _on_currency_changed(idx_selected: int):
 	populate();
 
 func _on_participant_selected(idx: int):
+	var contact_id = index_to_contact_id[idx];
+	var new_id = IDUtils.create_id('PPART');
+
+	while new_id in form_data["participants"].map(func(p): return p.id):
+		new_id = IDUtils.create_id('PPART');
+
 	var participant = SQLPaymentUtils.PaymentParticipant.new({
-		"id": IDUtils.create_id('PPART'),
+		"id": new_id,
 		"payment_id": form_data["id"],
-		"contact_id": contacts[idx].id
+		"contact_id": contact_id
 	});
 	form_data["participants"].push_back(participant);
 	populate();
